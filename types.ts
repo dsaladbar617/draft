@@ -1,24 +1,26 @@
 type Drafts = {
-	copyright: string;
-	drafts: Draft[];
+  copyright: string;
+  drafts: Draft[];
 };
 
 type Draft = {
-	draftYear: number;
-	rounds: Round[];
+  draftYear: number;
+  rounds: Round[];
 };
 
 type Round = {
-	roundNumber: number;
-	round: string;
-	picks: DraftPick[];
+  roundNumber: number;
+  round: string;
+  picks: DraftPick[];
 };
 
 type DraftPick = {
-	year: number;
-	round: string;
-	pickOverall: number;
-	pickInRound: number;
+  year: number;
+  round: string;
+  pickOverall: number;
+  pickInRound: number;
+  team: Team;
+  prospect: Prospect;
 };
 
 type Team = {
