@@ -1,35 +1,29 @@
-import { Dispatch, SetStateAction } from "react";
-import Select from "react-select";
+import { Dispatch, SetStateAction } from 'react';
+import Select from 'react-select';
 
 type Props = {
-  currentYear: number;
-  setDraftYear: Dispatch<SetStateAction<string>>;
+	currentYear: number;
+	setDraftYear: Dispatch<SetStateAction<string>>;
 };
 
 const DraftYearSelect = ({ currentYear, setDraftYear }: Props) => {
-  // const getCurrentYear = () => {
-  // 	return new Date().getFullYear();
-  // };
+	const draftDates = [];
 
-  // const currentYear = getCurrentYear();
+	for (let i = currentYear; i > 1962; i--) {
+		draftDates.push(i.toString());
+	}
 
-  const draftDates = [];
+	const options = draftDates.map((elem) => ({ value: elem, label: elem }));
 
-  for (let i = currentYear; i > 1962; i--) {
-    draftDates.push(i.toString());
-  }
-
-  const options = draftDates.map((elem) => ({ value: elem, label: elem }));
-
-  return (
-    <Select
-      onChange={(e) => {
-        if (e) setDraftYear(e.value);
-      }}
-      className="text-black"
-      options={options}
-    />
-  );
+	return (
+		<Select
+			onChange={(e) => {
+				if (e) setDraftYear(e.value);
+			}}
+			className='text-black'
+			options={options}
+		/>
+	);
 };
 
 export default DraftYearSelect;
