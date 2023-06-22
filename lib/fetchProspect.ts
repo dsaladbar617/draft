@@ -9,7 +9,7 @@ const useFetchProspect = (id: string) => {
 				`https://statsapi.web.nhl.com/api/v1/draft/prospects/${id}`
 			);
 
-			return data as test;
+			return data as FetchedProspect;
 		}
 	});
 };
