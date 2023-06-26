@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import useFetchDraft from '@/lib/useFetchDraft';
-import DraftTable from '../../../components/DraftTable';
+import DraftTable from '../../components/DraftTable';
 import TeamSelect from '@/components/TeamSelect';
 import TestYearSelect from '@/components/testYearSelect';
 
@@ -15,7 +15,9 @@ export default function Home({ params }: { params: { year: string } }) {
 
 	const [selectedTeam, setSelectedTeam] = useState<string | null>(null);
 
-	const { data, isLoading } = useFetchDraft(params.year);
+	const { data, isLoading } = useFetchDraft(
+		params.year ? params.year : currentYear
+	);
 
 	return (
 		<>

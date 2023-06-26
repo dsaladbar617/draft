@@ -21,7 +21,7 @@ const CareerStatTable = ({ player }: CareerStatTableProps) => {
 		'S%'
 	];
 
-	const playerData = player.people?.[0];
+	const playerData = player?.people?.[0];
 
 	const careerStats = playerData?.stats?.slice(2);
 
