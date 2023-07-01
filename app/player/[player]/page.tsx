@@ -1,4 +1,4 @@
-'use client';
+// 'use client';
 
 import Image from 'next/image';
 import CareerStatTable from '@/components/CareerStatTable';
@@ -9,31 +9,31 @@ import getProspect from '@/lib/getProspect';
 import getPlayerWithStats from '@/lib/getPlayerWithStats';
 
 const Page = async ({ searchParams }: any) => {
-	const { data: prospect } = useFetchProspect(searchParams.id);
+	// const { data: prospect } = useFetchProspect(searchParams.id);
 
-	const fetchedPlayer = prospect?.prospects[0].nhlPlayerId;
+	// const fetchedPlayer = prospect?.prospects[0].nhlPlayerId;
 
-	const { data: player, isLoading } = useQuery({
-		queryKey: ['player', fetchedPlayer],
-		queryFn: async () => {
-			const { data } = await axios.get(
-				`https://statsapi.web.nhl.com/api/v1/people/${fetchedPlayer}?expand=person.stats&stats=yearByYear,yearByYearPlayoffs,careerRegularSeason,careerPlayoffs,statsSingleSeason`
-			);
+	// const { data: player, isLoading } = useQuery({
+	// 	queryKey: ['player', fetchedPlayer],
+	// 	queryFn: async () => {
+	// 		const { data } = await axios.get(
+	// 			`https://statsapi.web.nhl.com/api/v1/people/${fetchedPlayer}?expand=person.stats&stats=yearByYear,yearByYearPlayoffs,careerRegularSeason,careerPlayoffs,statsSingleSeason`
+	// 		);
 
-			return data as NHLPlayer;
-		},
-		enabled: !!fetchedPlayer
-	});
+	// 		return data as NHLPlayer;
+	// 	},
+	// 	enabled: !!fetchedPlayer
+	// });
 
-	// const prospect = await getProspect(searchParams.id);
+	const prospect = await getProspect(searchParams.id);
 
-	// const player = await getPlayerWithStats(
-	// 	prospect.prospects[0].nhlPlayerId?.toString()
-	// );
+	const player = await getPlayerWithStats(
+		prospect.prospects[0].nhlPlayerId?.toString()
+	);
 
 	const playerData = player?.people?.[0];
 
-	if (isLoading) return <h1>Is Loading...</h1>;
+	// if (isLoading) return <h1>Is Loading...</h1>;
 
 	return (
 		<>
