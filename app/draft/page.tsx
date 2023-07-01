@@ -5,9 +5,8 @@ import useFetchDraft from '@/lib/useFetchDraft';
 import DraftTable from '../../components/DraftTable';
 import TeamSelect from '@/components/TeamSelect';
 import TestYearSelect from '@/components/testYearSelect';
-import getDraft from '@/lib/getDraft';
 
-export default async function Home() {
+export default function Home({ params }: { params: { year: string } }) {
 	const getCurrentYear = () => {
 		return new Date().getFullYear();
 	};
@@ -16,11 +15,9 @@ export default async function Home() {
 
 	const [selectedTeam, setSelectedTeam] = useState<string | null>(null);
 
-	// const { data, isLoading } = useFetchDraft(
-	// 	params.year ? params.year : currentYear
-	// );
-
-	const data = await getDraft(currentYear);
+	const { data, isLoading } = useFetchDraft(
+		params.year ? params.year : currentYear
+	);
 
 	return (
 		<>
@@ -28,8 +25,8 @@ export default async function Home() {
 				<TestYearSelect currentYear={+currentYear} />
 				<TeamSelect setSelectedTeam={setSelectedTeam} />
 			</div>
-			{/* {isLoading ? <div>Loading...</div> : null} */}
-			<DraftTable data={data} selectedTeam={selectedTeam} />
+			{isLoading ? <div>Loading...</div> : null}
+			<DraftTable data={data!} selectedTeam={selectedTeam} />
 		</>
 	);
 }

@@ -1,4 +1,4 @@
-const getDraft = async (year: string): Promise<Drafts> => {
+const getDraft = async (year: string) => {
 	const res = await fetch(`https://statsapi.web.nhl.com/api/v1/draft/${year}`);
 
 	if (!res.ok) {

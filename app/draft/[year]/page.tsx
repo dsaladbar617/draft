@@ -1,7 +1,7 @@
 'use client';
 
 import { Suspense, useState } from 'react';
-// import useFetchDraft from '@/lib/useFetchDraft';
+import useFetchDraft from '@/lib/useFetchDraft';
 import DraftTable from '../../../components/DraftTable';
 import TeamSelect from '@/components/TeamSelect';
 import TestYearSelect from '@/components/testYearSelect';
@@ -13,8 +13,6 @@ export default async function Home({ params }: { params: { year: string } }) {
 	};
 
 	const currentYear = getCurrentYear().toString();
-
-	console.log(currentYear);
 
 	const [selectedTeam, setSelectedTeam] = useState<string | null>(null);
 
@@ -28,9 +26,9 @@ export default async function Home({ params }: { params: { year: string } }) {
 				<TeamSelect setSelectedTeam={setSelectedTeam} />
 			</div>
 			{/* {isLoading ? <div>Loading...</div> : null} */}
-			{/* <Suspense fallback={<div>Loading...</div>}> */}
-			<DraftTable data={data} selectedTeam={selectedTeam} />
-			{/* </Suspense> */}
+			<Suspense fallback={<div>Loading...</div>}>
+				<DraftTable data={data} selectedTeam={selectedTeam} />
+			</Suspense>
 		</>
 	);
 }
