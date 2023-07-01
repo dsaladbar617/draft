@@ -57,7 +57,7 @@ const DraftTable = ({ data, selectedTeam }: TableProps) => {
 									query: { id: pick.prospect.id?.toString() }
 								}}
 								key={uuidv4()}
-								className='hover:bg-slate-400 hover:text-black table-row'>
+								className='hover:bg-slate-400 hover:text-black table-row transition duration-200'>
 								<div className='table-cell p-4'>{pick.pickOverall}</div>
 								<div className='table-cell p-4'>{pick.team.name}</div>
 								<div className='table-cell p-4'>{pick.prospect.fullName}</div>

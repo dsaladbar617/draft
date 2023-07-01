@@ -25,7 +25,7 @@ const CareerStatTable = ({ player }: CareerStatTableProps) => {
 
 	const careerStats = playerData?.stats?.slice(2);
 
-	console.log(playerData);
+	// console.log(playerData);
 
 	return (
 		<div className='table mx-auto mt-5 table-responsive rounded-md text-center p-4 w-2/3 border-collapse overflow-y-scroll'>

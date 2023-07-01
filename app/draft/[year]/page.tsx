@@ -1,21 +1,23 @@
 'use client';
 
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 import useFetchDraft from '@/lib/useFetchDraft';
 import DraftTable from '../../../components/DraftTable';
 import TeamSelect from '@/components/TeamSelect';
 import TestYearSelect from '@/components/testYearSelect';
+import getDraft from '@/lib/getDraft';
 
-export default function Home({ params }: { params: { year: string } }) {
+export default async function Home({ params }: { params: { year: string } }) {
 	const getCurrentYear = () => {
-		return new Date().getFullYear() - 1;
+		return new Date().getFullYear();
 	};
 
 	const currentYear = getCurrentYear().toString();
 
 	const [selectedTeam, setSelectedTeam] = useState<string | null>(null);
 
-	const { data, isLoading } = useFetchDraft(params.year);
+	// const { data, isLoading } = useFetchDraft(params.year);
+	const data = await getDraft(params.year);
 
 	return (
 		<>
@@ -23,8 +25,10 @@ export default function Home({ params }: { params: { year: string } }) {
 				<TestYearSelect currentYear={+currentYear} />
 				<TeamSelect setSelectedTeam={setSelectedTeam} />
 			</div>
-			{isLoading ? <div>Loading...</div> : null}
-			<DraftTable data={data!} selectedTeam={selectedTeam} />
+			{/* {isLoading ? <div>Loading...</div> : null} */}
+			<Suspense fallback={<div>Loading...</div>}>
+				<DraftTable data={data} selectedTeam={selectedTeam} />
+			</Suspense>
 		</>
 	);
 }

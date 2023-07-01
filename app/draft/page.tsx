@@ -8,7 +8,7 @@ import TestYearSelect from '@/components/testYearSelect';
 
 export default function Home({ params }: { params: { year: string } }) {
 	const getCurrentYear = () => {
-		return new Date().getFullYear() - 1;
+		return new Date().getFullYear();
 	};
 
 	const currentYear = getCurrentYear().toString();
