@@ -13,9 +13,6 @@ const Header = () => {
 				<Link className='p-2' href='/draft'>
 					DRAFT
 				</Link>
-				<Link className='p-2' href='/player'>
-					PLAYERS
-				</Link>
 			</div>
 		</nav>
 	);

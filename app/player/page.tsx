@@ -52,7 +52,7 @@ const Page = () => {
 				{options?.map((item, index) => (
 					<option
 						onClick={() => {
-							// console.log(item);
+							console.log(item);
 						}}
 						key={index}
 						value={item.name}

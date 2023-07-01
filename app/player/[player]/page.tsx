@@ -1,39 +1,36 @@
-// 'use client';
+'use client';
 
 import Image from 'next/image';
 import CareerStatTable from '@/components/CareerStatTable';
 import useFetchProspect from '@/lib/useFetchProspect';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
-import getProspect from '@/lib/getProspect';
-import getPlayerWithStats from '@/lib/getPlayerWithStats';
+import { useSearchParams } from 'next/navigation';
 
-const Page = async ({ searchParams }: any) => {
-	// const { data: prospect } = useFetchProspect(searchParams.id);
+const Page = ({}) => {
+	const searchParams = useSearchParams();
 
-	// const fetchedPlayer = prospect?.prospects[0].nhlPlayerId;
+	const id = searchParams.get('id');
 
-	// const { data: player, isLoading } = useQuery({
-	// 	queryKey: ['player', fetchedPlayer],
-	// 	queryFn: async () => {
-	// 		const { data } = await axios.get(
-	// 			`https://statsapi.web.nhl.com/api/v1/people/${fetchedPlayer}?expand=person.stats&stats=yearByYear,yearByYearPlayoffs,careerRegularSeason,careerPlayoffs,statsSingleSeason`
-	// 		);
+	const { data: prospect } = useFetchProspect(id!);
 
-	// 		return data as NHLPlayer;
-	// 	},
-	// 	enabled: !!fetchedPlayer
-	// });
+	const fetchedPlayer = prospect?.prospects[0].nhlPlayerId;
 
-	const prospect = await getProspect(searchParams.id);
+	const { data: player, isLoading } = useQuery({
+		queryKey: ['player', fetchedPlayer],
+		queryFn: async () => {
+			const { data } = await axios.get(
+				`https://statsapi.web.nhl.com/api/v1/people/${fetchedPlayer}?expand=person.stats&stats=yearByYear,yearByYearPlayoffs,careerRegularSeason,careerPlayoffs,statsSingleSeason`
+			);
 
-	const player = await getPlayerWithStats(
-		prospect.prospects[0].nhlPlayerId?.toString()
-	);
+			return data as NHLPlayer;
+		},
+		enabled: !!fetchedPlayer
+	});
 
 	const playerData = player?.people?.[0];
 
-	// if (isLoading) return <h1>Is Loading...</h1>;
+	if (isLoading) return <h1>Is Loading...</h1>;
 
 	return (
 		<>
@@ -43,7 +40,6 @@ const Page = async ({ searchParams }: any) => {
 					src={`https://cms.nhl.bamgrid.com/images/headshots/current/168x168/${playerData?.id.toString()}@2x.jpg`}
 					width={300}
 					height={300}
-					priority
 					className='rounded-full'
 				/>
 				<div className=' bg-slate-500 rounded text-left p-5 text-xl'>
