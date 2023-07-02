@@ -26,7 +26,7 @@ const TestYearSelect = ({ currentYear }: Props) => {
 			onValueChange={(e) => {
 				if (e) router.push(`/draft/${e}`);
 			}}>
-			<SelectTrigger className='w-[180px]'>
+			<SelectTrigger className='w-1/2 lg:w-1/4'>
 				<SelectValue placeholder='Pick a Draft Year...' />
 			</SelectTrigger>
 			<SelectContent>

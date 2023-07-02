@@ -1,16 +1,17 @@
 'use client';
 import useDebounce from '@/lib/useDebounce';
+import * as _ from 'lodash';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Link from 'next/link';
 
 const Page = () => {
 	const [search, setSearch] = useState('');
 
 	const router = useRouter();
 
+	// const debounced = _.debounce(search, 250);
 	const debounced = useDebounce(search, 250);
 
 	const { data } = useQuery({
@@ -63,40 +64,40 @@ const Page = () => {
 				}}
 			/>
 			{data ? (
-				<table className='mx-auto table-responsive rounded-md text-center p-4 border-collapse'>
-					<thead className='table-header-group bg-slate-500 rounded-lg p-4'>
-						<tr className='table-row rounded'>
+				<div className='mx-auto table-responsive rounded-md text-center p-4 border-collapse'>
+					<div className='table-header-group bg-slate-500 rounded-lg p-4'>
+						<div className='table-row rounded'>
 							{headers.map((header: string, index: number) => (
-								<th
+								<div
 									key={header}
 									className={`table-cell p-4 ${
 										index === headers.length - 1 ? 'rounded-tr-lg' : null
 									} ${index === 0 ? 'rounded-tl-lg' : null}`}>
 									{header}
-								</th>
+								</div>
 							))}
-						</tr>
-					</thead>
-					<tbody className='table-row-group divide-y divide-gray-300'>
+						</div>
+					</div>
+					<div className='table-row-group divide-y divide-gray-300'>
 						{options?.map((elem, index) => (
-							<tr
+							<div
 								key={index}
 								className='hover:bg-slate-400 hover:text-black table-row'
 								onClick={() => {
 									router.push(`/player/${elem.name}?id=${elem.id}`);
 								}}>
-								<td className='table-cell p-4'>{elem.name}</td>
-								<td className='table-cell p-4'>{elem.position}</td>
-								<td className='table-cell p-4'>{elem.team}</td>
-								<td className='table-cell p-4'>{elem.jerseyNumber}</td>
-								<td className='table-cell p-4'>{elem.height}</td>
-								<td className='table-cell p-4'>{elem.weight}</td>
-								<td className='table-cell p-4'>{elem.birthPlace}</td>
-								<td className='table-cell p-4'>{elem.country}</td>
-							</tr>
+								<div className='table-cell p-4'>{elem.name}</div>
+								<div className='table-cell p-4'>{elem.position}</div>
+								<div className='table-cell p-4'>{elem.team}</div>
+								<div className='table-cell p-4'>{elem.jerseyNumber}</div>
+								<div className='table-cell p-4'>{elem.height}</div>
+								<div className='table-cell p-4'>{elem.weight}</div>
+								<div className='table-cell p-4'>{elem.birthPlace}</div>
+								<div className='table-cell p-4'>{elem.country}</div>
+							</div>
 						))}
-					</tbody>
-				</table>
+					</div>
+				</div>
 			) : null}
 		</div>
 	);
