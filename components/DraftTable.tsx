@@ -1,5 +1,4 @@
 import Link from 'next/link';
-// import { useRouter } from 'next/navigation';
 import { Fragment } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -11,8 +10,6 @@ type TableProps = {
 const headers = ['Pick', 'Team', 'Name'];
 
 const DraftTable = ({ data, selectedTeam }: TableProps) => {
-	// const router = useRouter();
-
 	let draft: Round[] = [];
 	draft = selectedTeam
 		? data?.drafts[0].rounds.map((round) => ({

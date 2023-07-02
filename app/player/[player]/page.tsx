@@ -5,32 +5,26 @@ import CareerStatTable from '@/components/CareerStatTable';
 import useFetchProspect from '@/lib/useFetchProspect';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
-import { useSearchParams } from 'next/navigation';
+import getProspect from '@/lib/getProspect';
+import getPlayerWithStats from '@/lib/getPlayerWithStats';
 
-const Page = ({}) => {
-	const searchParams = useSearchParams();
+type PageProps = {
+	searchParams: { id: string };
+};
 
-	const id = searchParams.get('id');
+const Page = async ({ searchParams }: PageProps) => {
+	const id = searchParams.id;
 
-	const { data: prospect } = useFetchProspect(id!);
+	const prospect = await getProspect(id);
 
-	const fetchedPlayer = prospect?.prospects[0].nhlPlayerId;
+	const fetchedPlayer =
+		id.length === 5
+			? (await getProspect(id)).prospects[0].nhlPlayerId.toString()
+			: id;
 
-	const { data: player, isLoading } = useQuery({
-		queryKey: ['player', fetchedPlayer],
-		queryFn: async () => {
-			const { data } = await axios.get(
-				`https://statsapi.web.nhl.com/api/v1/people/${fetchedPlayer}?expand=person.stats&stats=yearByYear,yearByYearPlayoffs,careerRegularSeason,careerPlayoffs,statsSingleSeason`
-			);
-
-			return data as NHLPlayer;
-		},
-		enabled: !!fetchedPlayer
-	});
+	const player = await getPlayerWithStats(fetchedPlayer);
 
 	const playerData = player?.people?.[0];
-
-	if (isLoading) return <h1>Is Loading...</h1>;
 
 	return (
 		<>
@@ -41,6 +35,7 @@ const Page = ({}) => {
 					width={300}
 					height={300}
 					className='rounded-full'
+					priority
 				/>
 				<div className=' bg-slate-500 rounded text-left p-5 text-xl'>
 					<h1>Name: {playerData?.fullName}</h1>

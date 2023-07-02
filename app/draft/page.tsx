@@ -22,7 +22,7 @@ export default function Home({ params }: { params: { year: string } }) {
 	return (
 		<>
 			<div className='flex flex-row justify-between w-1/2 mx-auto mt-4'>
-				<TestYearSelect currentYear={+currentYear} />
+				<TestYearSelect currentYear={Number(currentYear)} />
 				<TeamSelect setSelectedTeam={setSelectedTeam} />
 			</div>
 			{isLoading ? <div>Loading...</div> : null}
