@@ -2,7 +2,6 @@
 
 import YearSelect from '@/components/YearSelect';
 import { useState } from 'react';
-import useFetchDraft from '@/lib/useFetchDraft';
 import DraftTable from '../components/DraftTable';
 import TeamSelect from '@/components/TeamSelect';
 

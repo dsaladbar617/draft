@@ -1,5 +1,4 @@
 import Header from '@/components/Header';
-import { ReactQueryProvider } from './ReactQueryProvider';
 import './globals.css';
 import { Inter } from 'next/font/google';
 
@@ -17,12 +16,10 @@ export default function RootLayout({
 }) {
 	return (
 		<html lang='en'>
-			<ReactQueryProvider>
-				<body className={inter.className}>
-					<Header />
-					{children}
-				</body>
-			</ReactQueryProvider>
+			<body className={inter.className}>
+				<Header />
+				{children}
+			</body>
 		</html>
 	);
 }

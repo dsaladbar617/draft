@@ -1,105 +1,66 @@
 'use client';
-import useDebounce from '@/lib/useDebounce';
-import * as _ from 'lodash';
-import { useQuery } from '@tanstack/react-query';
+
 import axios from 'axios';
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { Suspense, useState } from 'react';
+import getNHLYears from '@/lib/getCurrentYear';
+import useSWR, { Fetcher } from 'swr';
+import SeasonSelect from '@/components/SeasonSelect';
+import TeamsSelect from '@/components/TeamsSelect';
+import BasicSelect from '@/components/BasicSelect';
 
 const Page = () => {
-	const [search, setSearch] = useState('');
+	// Returns an array of years in the format of YYYY-YYYY
+	const dates = getNHLYears();
 
-	const router = useRouter();
+	// Set the current date to the first year in the array
 
-	// const debounced = _.debounce(search, 250);
-	const debounced = useDebounce(search, 250);
+	const [currentDate, setCurrentDate] = useState<string | null>(
+		dates[0].replace('-', '')
+	);
+	const [currentTeam, setCurrentTeam] = useState<string | null>(null);
 
-	const { data } = useQuery({
-		queryKey: ['players', debounced],
-		queryFn: async () => {
-			const { data } = await axios.get(
-				`https://suggest.svc.nhl.com/svc/suggest/v1/minplayers/${search}/99999`
-			);
+	// Fetch the data from the API
+	const fetcher: Fetcher<TeamType> = async (currentDate: string) => {
+		const { data } = await axios.get(
+			`https://statsapi.web.nhl.com/api/v1/teams?expand=team.roster&season=${currentDate}`
+		);
 
-			return data as SuggestionType;
-		},
-		enabled: debounced !== ''
-	});
+		return data as TeamType;
+	};
 
-	const options = data?.suggestions.map((item) => {
-		const elem = item.split('|');
+	const { data: teams, error } = useSWR(currentDate, fetcher);
 
-		return {
-			name: `${elem[2]} ${elem[1]}`,
-			id: elem[0],
-			position: elem[12],
-			jerseyNumber: elem[13],
-			team: elem[11],
-			height: elem[5],
-			weight: elem[6],
-			birthPlace: `${elem[7]}, ${elem[8]}`,
-			country: elem[9]
-		};
-	});
+	const options = teams?.teams.map((elem) => ({
+		value: elem.id,
+		label: elem.name
+	}));
 
-	const headers = [
-		'Player',
-		'Pos',
-		'Team',
-		'#',
-		'Ht',
-		'Wt',
-		'Birthplace',
-		'Country'
-	];
+	console.log(currentDate);
 
 	return (
-		<div>
-			<input
-				className='text-black m-10 w-1/3 h-10s rounded p-3'
-				type='text'
-				placeholder='Search Players...'
+		<>
+			{/* <select
+				className='text-black'
 				onChange={(e) => {
-					setSearch(e.currentTarget.value);
-				}}
+					setCurrentDate(e.currentTarget.value.replace('-', ''));
+				}}>
+				<option value=''>Pick a Season...</option>
+				{dates?.map((elem) => (
+					<option key={elem} value={elem}>
+						{elem}
+					</option>
+				))}
+			</select> */}
+			<SeasonSelect
+				data={dates}
+				setter={setCurrentDate}
+				teams={teams ? teams.teams : null}
 			/>
-			{data ? (
-				<div className='mx-auto table-responsive rounded-md text-center p-4 border-collapse'>
-					<div className='table-header-group bg-slate-500 rounded-lg p-4'>
-						<div className='table-row rounded'>
-							{headers.map((header: string, index: number) => (
-								<div
-									key={header}
-									className={`table-cell p-4 ${
-										index === headers.length - 1 ? 'rounded-tr-lg' : null
-									} ${index === 0 ? 'rounded-tl-lg' : null}`}>
-									{header}
-								</div>
-							))}
-						</div>
-					</div>
-					<div className='table-row-group divide-y divide-gray-300'>
-						{options?.map((elem, index) => (
-							<div
-								key={index}
-								className='hover:bg-slate-400 hover:text-black table-row'
-								onClick={() => {
-									router.push(`/player/${elem.name}?id=${elem.id}`);
-								}}>
-								<div className='table-cell p-4'>{elem.name}</div>
-								<div className='table-cell p-4'>{elem.position}</div>
-								<div className='table-cell p-4'>{elem.team}</div>
-								<div className='table-cell p-4'>{elem.jerseyNumber}</div>
-								<div className='table-cell p-4'>{elem.height}</div>
-								<div className='table-cell p-4'>{elem.weight}</div>
-								<div className='table-cell p-4'>{elem.birthPlace}</div>
-								<div className='table-cell p-4'>{elem.country}</div>
-							</div>
-						))}
-					</div>
-				</div>
-			) : null}
-		</div>
+			{/* <Suspense */}
+			{/* fallback={<BasicSelect data={null} placeholder='Select a Team' />}> */}
+			<TeamsSelect data={teams?.teams} setter={setCurrentTeam} />
+			{/* </Suspense> */}
+		</>
 	);
 };
 
