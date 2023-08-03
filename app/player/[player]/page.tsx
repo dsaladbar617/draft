@@ -11,7 +11,7 @@ const Page = async ({ searchParams }: PageProps) => {
 	const id = searchParams.id;
 
 	const fetchedPlayer =
-		id.length === 5
+		id.length < 6
 			? (await getProspect(id)).prospects[0].nhlPlayerId?.toString()
 			: id;
 
