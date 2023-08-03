@@ -3,9 +3,9 @@ import { useQuery } from '@tanstack/react-query';
 const useRosters = async (season: string) => {
 	const { data } = await useQuery(
 		['rosters', season],
-		async (): Promise<TeamType> => {
+		async (): Promise<TeamTypeWithRoster> => {
 			const res = await fetch(
-				`https://statsapi.web.nhl.com/api/v1/teams?expand=team.roster&season=${season}}`
+				`https://statsapi.web.nhl.com/api/v1/teams?expand=team.roster&season=${season}`
 			);
 			if (!res.ok) {
 				throw new Error('Failed to fetch data');

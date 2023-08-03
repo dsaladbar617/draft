@@ -3,24 +3,10 @@ type TeamType = {
 	teams: Team[];
 };
 
-// type Team = {
-// 	id: number;
-// 	name: string;
-// 	link: string;
-// 	venue: Venue;
-// 	abbreviation: string;
-// 	teamName: string;
-// 	locationName: string;
-// 	firstYearOfPlay: string;
-// 	division: Division;
-// 	conference: Conference;
-// 	franchise: Franchise;
-// 	roster: TeamRoster;
-// 	shortName: string;
-// 	officialSiteUrl: string;
-// 	franchiseId: number;
-// 	active: boolean;
-// };
+type TeamTypeWithRoster = {
+	copyright: string;
+	teams: TeamWithRoster[];
+};
 
 type Conference = {
 	id: number;

@@ -1,4 +1,4 @@
-const getNHLYears = () => {
+const getNHLYears = (singleYearFlag: Boolean) => {
 	const dates = [];
 	const getCurrentYear = () => {
 		return new Date().getFullYear();
@@ -7,7 +7,11 @@ const getNHLYears = () => {
 	const currentYear = getCurrentYear();
 
 	for (let i = currentYear; i > 1962; i--) {
-		dates.push(`${i}-${i + 1}`);
+		if (!singleYearFlag) {
+			dates.push(`${i}-${i + 1}`);
+		} else {
+			dates.push(i.toString());
+		}
 	}
 
 	return dates;

@@ -1,10 +1,5 @@
-'use client';
-
 import Image from 'next/image';
 import CareerStatTable from '@/components/CareerStatTable';
-import useFetchProspect from '@/lib/useFetchProspect';
-import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
 import getProspect from '@/lib/getProspect';
 import getPlayerWithStats from '@/lib/getPlayerWithStats';
 
@@ -15,19 +10,17 @@ type PageProps = {
 const Page = async ({ searchParams }: PageProps) => {
 	const id = searchParams.id;
 
-	const prospect = await getProspect(id);
-
 	const fetchedPlayer =
 		id.length === 5
-			? (await getProspect(id)).prospects[0].nhlPlayerId.toString()
+			? (await getProspect(id)).prospects[0].nhlPlayerId?.toString()
 			: id;
 
+	if (fetchedPlayer === undefined) return <div className='text-center mt-10'>Player not found</div>;
 	const player = await getPlayerWithStats(fetchedPlayer);
-
 	const playerData = player?.people?.[0];
 
 	return (
-		<>
+		<div>
 			<div className='sm:flex sm:flex-row w-full justify-center'>
 				<Image
 					alt={`${playerData?.fullName} image`}
@@ -54,7 +47,7 @@ const Page = async ({ searchParams }: PageProps) => {
 				<h1 className='text-2xl text-center'>Stats</h1>
 				<CareerStatTable player={player!} />
 			</div>
-		</>
+		</div>
 	);
 };
 

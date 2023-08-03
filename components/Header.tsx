@@ -10,7 +10,7 @@ const Header = () => {
 				<Link className='p-2' href='/'>
 					HOME
 				</Link>
-				<Link className='p-2' href='/draft'>
+				<Link className='p-2' href='/draft/2023'>
 					DRAFT
 				</Link>
 				<Link className='p-2' href='/player'>

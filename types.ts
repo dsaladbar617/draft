@@ -29,6 +29,10 @@ type Team = {
 	link: string;
 };
 
+type TeamWithRoster = Team & {
+	roster: TeamRoster;
+};
+
 type Prospect = {
 	id: number;
 	fullName: string;
@@ -47,7 +51,7 @@ type Prospect = {
 		type: string;
 		abbreviation: string;
 	};
-	nhlPlayerId: number;
+	nhlPlayerId?: number;
 	draftStatus: string;
 	prospectCategory: {
 		id: number;

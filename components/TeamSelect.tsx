@@ -1,5 +1,4 @@
-import { Dispatch, SetStateAction } from 'react';
-import { ScrollArea } from './ui/scroll-area';
+import axios from 'axios';
 import {
 	Select,
 	SelectContent,
@@ -7,67 +6,54 @@ import {
 	SelectTrigger,
 	SelectValue
 } from './ui/select';
+import { useQuery } from '@tanstack/react-query';
 
 type Props = {
-	setSelectedTeam: Dispatch<SetStateAction<string | null>>;
+	setter: (value: string) => void;
+	currentYear: string;
 };
 
-const TeamSelect = ({ setSelectedTeam }: Props) => {
-	let teams = [
-		{ name: 'None', team_id: 0 },
-		{ name: 'Anaheim Ducks', team_id: 24 },
-		{ name: 'Arizona Coyotes', team_id: 53 },
-		{ name: 'Boston Bruins', team_id: 6 },
-		{ name: 'Buffalo Sabres', team_id: 7 },
-		{ name: 'Calgary Flames', team_id: 20 },
-		{ name: 'Carolina Hurricanes', team_id: 12 },
-		{ name: 'Chicago Blackhawks', team_id: 16 },
-		{ name: 'Colorado Avalanche', team_id: 21 },
-		{ name: 'Columbus Blue Jackets', team_id: 29 },
-		{ name: 'Dallas Stars', team_id: 25 },
-		{ name: 'Detroit Red Wings', team_id: 17 },
-		{ name: 'Edmonton Oilers', team_id: 22 },
-		{ name: 'Florida Panthers', team_id: 13 },
-		{ name: 'Los Angeles Kings', team_id: 26 },
-		{ name: 'Minnesota Wild', team_id: 30 },
-		{ name: 'Montréal Canadiens', team_id: 8 },
-		{ name: 'Nashville Predators', team_id: 18 },
-		{ name: 'New Jersey Devils', team_id: 1 },
-		{ name: 'New York Islanders', team_id: 2 },
-		{ name: 'New York Rangers', team_id: 3 },
-		{ name: 'Ottawa Senators', team_id: 9 },
-		{ name: 'Philadelphia Flyers', team_id: 4 },
-		{ name: 'Pittsburgh Penguins', team_id: 5 },
-		{ name: 'San Jose Sharks', team_id: 28 },
-		{ name: 'Seattle Kraken', team_id: 55 },
-		{ name: 'St Louis Blues', team_id: 19 },
-		{ name: 'Tampa Bay Lightning', team_id: 14 },
-		{ name: 'Toronto Maple Leafs', team_id: 10 },
-		{ name: 'Vancouver Canucks', team_id: 23 },
-		{ name: 'Vegas Golden Knights', team_id: 54 },
-		{ name: 'Washington Capitals', team_id: 15 },
-		{ name: 'Winnipeg Jets', team_id: 52 }
-	];
+const TeamSelect = ({ setter, currentYear }: Props) => {
+	const { data: teams } = useQuery(['teams'], async () => {
+		const res = await axios.get(
+			`https://statsapi.web.nhl.com/api/v1/teams?season=${currentYear}${(
+				Number(currentYear) + 1
+			).toString()}`
+		);
+
+		return res.data.teams as Team[];
+	});
 
 	return (
 		<Select
 			onValueChange={(e) => {
-				if (e) setSelectedTeam(e);
+				if (e) setter(e);
 			}}>
-			<SelectTrigger className='w-1/2 lg:w-1/4'>
+			<SelectTrigger className='w-1/3'>
 				<SelectValue placeholder='Select a team...' />
 			</SelectTrigger>
-			<SelectContent>
-				<ScrollArea className=' h-64'>
-					{teams.map((elem) => (
+			<SelectContent className='max-h-[75vh]'>
+				<SelectItem className='hover:bg-slate-500' key={0} value={'0'}>
+					{'None'}
+				</SelectItem>
+				{teams
+					?.sort((a, b) => {
+						if (a.name.toUpperCase() > b.name.toUpperCase()) {
+							return 1;
+						}
+						if (a.name.toUpperCase() < b.name.toUpperCase()) {
+							return -1;
+						}
+						return 0;
+					})
+					.map((elem) => (
 						<SelectItem
 							className='hover:bg-slate-500'
-							key={elem.team_id}
-							value={elem.team_id.toString()}>
+							key={elem.id}
+							value={elem.id.toString()}>
 							{elem.name}
 						</SelectItem>
 					))}
-				</ScrollArea>
 			</SelectContent>
 		</Select>
 	);

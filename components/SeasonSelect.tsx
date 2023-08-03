@@ -7,7 +7,6 @@ import {
 	SelectValue
 } from './ui/select';
 import { ScrollArea } from './ui/scroll-area';
-import getRosters from '@/lib/getRosters';
 
 type Props = {
 	data: any[];
@@ -27,16 +26,16 @@ const SeasonSelect = ({ data, teams, setter }: Props) => {
 				<SelectValue placeholder='Pick a Season' />
 			</SelectTrigger>
 			<SelectContent>
-				<ScrollArea className=' h-64'>
-					{options.map((elem) => (
-						<SelectItem
-							className='hover:bg-slate-500'
-							key={elem.value}
-							value={elem.value}>
-							{elem.label}
-						</SelectItem>
-					))}
-				</ScrollArea>
+				{/* <ScrollArea className=' h-64'> */}
+				{options.map((elem) => (
+					<SelectItem
+						className='hover:bg-slate-500'
+						key={elem.value}
+						value={elem.value}>
+						{elem.label}
+					</SelectItem>
+				))}
+				{/* </ScrollArea> */}
 			</SelectContent>
 		</Select>
 	);
