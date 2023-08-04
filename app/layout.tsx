@@ -24,7 +24,7 @@ export default function RootLayout({
 						<Header />
 						{children}
 					</div>
-					<ReactQueryDevtools />
+					{/* <ReactQueryDevtools /> */}
 				</RQProvider>
 			</body>
 		</html>

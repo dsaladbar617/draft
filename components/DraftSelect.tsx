@@ -7,8 +7,6 @@ interface DraftSelectProps {
 }
 
 const DraftSelect = ({ currentYear, setter }: DraftSelectProps) => {
-	console.log(currentYear);
-
 	return (
 		<div className='flex flex-row justify-between w-2/3 mx-auto mt-4'>
 			<TestYearSelect currentYear={Number(currentYear)} />

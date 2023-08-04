@@ -83,6 +83,7 @@ type NHLPlayer = {
 			currentAge: number;
 			birthCity: string;
 			birthCountry: string;
+			birthStateProvince?: string;
 			nationality: string;
 			height: string;
 			weight: number;
@@ -119,6 +120,7 @@ type Stats = {
 };
 
 type Splits = {
+	season?: string;
 	stat?: {
 		timeOnIce?: string;
 		assists: number;
