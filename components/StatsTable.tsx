@@ -92,15 +92,15 @@ const StatsTable = ({ player }: StatsTableProps) => {
 					points: acc.stat!.points + points!,
 					plusMinus: acc.stat!.plusMinus + plusMinus!,
 					pim: acc.stat!.pim + pim!,
-					powerPlayGoals: acc.stat!.powerPlayGoals + ppg,
-					powerPlayPoints: acc.stat!.powerPlayPoints + ppp,
-					shortHandedGoals: acc.stat!.shortHandedGoals + shg,
-					shortHandedPoints: acc.stat!.shortHandedPoints + shp,
-					gameWinningGoals: acc.stat!.gameWinningGoals + gwg,
-					overTimeGoals: acc.stat!.overTimeGoals + otg,
-					shots: acc.stat!.shots + shots,
-					shotPct: acc.stat!.shotPct + shotPct,
-					faceOffPct: acc.stat!.faceOffPct + faceoffPct
+					powerPlayGoals: acc.stat!.powerPlayGoals! + ppg!,
+					powerPlayPoints: acc.stat!.powerPlayPoints! + ppp!,
+					shortHandedGoals: acc.stat!.shortHandedGoals! + shg!,
+					shortHandedPoints: acc.stat!.shortHandedPoints! + shp!,
+					gameWinningGoals: acc.stat!.gameWinningGoals! + gwg!,
+					overTimeGoals: acc.stat!.overTimeGoals! + otg!,
+					shots: acc.stat!.shots! + shots!,
+					shotPct: acc.stat!.shotPct! + shotPct!,
+					faceOffPct: acc.stat!.faceOffPct! + faceoffPct!
 				}
 			};
 		});
