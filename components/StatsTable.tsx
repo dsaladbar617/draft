@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import StatSelect from './StatSelect';
 import { v4 as uuidv4 } from 'uuid';
+// import Stats from '../types/Stats';
 
 interface StatsTableProps {
 	player: NHLPlayer;
@@ -63,28 +64,46 @@ const StatsTable = ({ player }: StatsTableProps) => {
 		elem.league?.name === currentLeauge ? elem : null
 	);
 
-	console.log(filteredStats);
+	const reducedStats =
+		filteredStats.length > 0 &&
+		filteredStats.reduce((acc, curr) => {
+			const gamesPlayed = curr.stat?.games;
+			const goals = curr.stat?.goals;
+			const assists = curr.stat?.assists;
+			const points = curr.stat?.points;
+			const plusMinus = curr.stat?.plusMinus;
+			const pim = curr.stat?.pim;
+			const ppg = curr.stat?.powerPlayGoals;
+			const ppp = curr.stat?.powerPlayPoints;
+			const shg = curr.stat?.shortHandedGoals;
+			const shp = curr.stat?.shortHandedPoints;
+			const gwg = curr.stat?.gameWinningGoals;
+			const otg = curr.stat?.overTimeGoals;
+			const shots = curr.stat?.shots;
+			const shotPct = curr.stat?.shotPct;
+			const faceoffPct = curr.stat?.faceOffPct;
 
-	// filteredStats.reduce((acc, curr) => {
-	// 	const gamesPlayed = curr.stat?.games;
-	// 	const goals = curr.stat?.goals;
-	// 	const assists = curr.stat?.assists;
-	// 	const points = curr.stat?.points;
-	// 	const plusMinus = curr.stat?.plusMinus;
-	// 	const penaltyMinutes = curr.stat?.pim;
-	// 	const powerPlayGoals = curr.stat?.powerPlayGoals;
-	// 	const powerPlayPoints = curr.stat?.powerPlayPoints;
-	// 	const shortHandedGoals = curr.stat?.shortHandedGoals;
-	// 	const shortHandedPoints = curr.stat?.shortHandedPoints;
-	// 	const gameWinningGoals = curr.stat?.gameWinningGoals;
-	// 	const overTimeGoals = curr.stat?.overTimeGoals;
-	// 	const shots = curr.stat?.shots;
-	// 	const shootingPercentage = curr.stat?.shotPct;
-	// 	const faceOffPercentage = curr.stat?.faceOffPct;
-
-	// 	return {...acc,
-	// 		[gamesPlayed!]: [...(acc[gamesPlayed!] || []), (gamesPlayed)],)]};
-	// }, {});
+			console.log(curr.league?.name, curr.stat);
+			return {
+				stat: {
+					games: acc.stat!.games + gamesPlayed!,
+					goals: acc.stat!.goals + goals!,
+					assists: acc.stat!.assists + assists!,
+					points: acc.stat!.points + points!,
+					plusMinus: acc.stat!.plusMinus + plusMinus!,
+					pim: acc.stat!.pim + pim!,
+					powerPlayGoals: acc.stat!.powerPlayGoals + ppg,
+					powerPlayPoints: acc.stat!.powerPlayPoints + ppp,
+					shortHandedGoals: acc.stat!.shortHandedGoals + shg,
+					shortHandedPoints: acc.stat!.shortHandedPoints + shp,
+					gameWinningGoals: acc.stat!.gameWinningGoals + gwg,
+					overTimeGoals: acc.stat!.overTimeGoals + otg,
+					shots: acc.stat!.shots + shots,
+					shotPct: acc.stat!.shotPct + shotPct,
+					faceOffPct: acc.stat!.faceOffPct + faceoffPct
+				}
+			};
+		});
 
 	const careerStats = playerData?.stats[careerIndex];
 
@@ -100,14 +119,14 @@ const StatsTable = ({ player }: StatsTableProps) => {
 				setSeason={setSeasonType}
 				setLeague={setCurrentLeague}
 			/>
-			<div>{JSON.stringify(filteredStats)}</div>
-			{/* <table className='table mx-auto mt-5 table-responsive rounded-md text-center p-4 w-2/3 border-collapse overflow-x-auto '>
+			{/* <div>{JSON.stringify(reducedStats.stat)}</div> */}
+			<table className='table mx-auto mt-5 w-11/12 rounded-md text-center p-4 border-collapse overflow-x-auto '>
 				<thead className='table-header-group bg-slate-500 rounded-lg p-4'>
 					<tr className='table-row rounded'>
 						{headers.map((header: string, index: number) => (
 							<th
 								key={header}
-								className={`table-cell p-4 ${
+								className={` p-4 ${
 									index === headers.length - 1 ? 'rounded-tr-lg' : null
 								} ${
 									index === 0
@@ -123,99 +142,77 @@ const StatsTable = ({ player }: StatsTableProps) => {
 					{filteredStats.map((stat) => {
 						return (
 							<tr className='table-row' key={uuidv4()}>
-								<td className='table-cell p-4 sticky left-0 bg-black'>
+								<td className=' p-4 sticky left-0 bg-black'>
 									{`${stat.season?.substring(0, 4)}-${stat.season?.substring(
 										4
 									)}`}
 								</td>
-								<td className='table-cell p-4'>{stat.team?.name}</td>
-								<td className='table-cell p-4'>{stat.stat?.games}</td>
-								<td className='table-cell p-4'>{stat.stat?.goals}</td>
-								<td className='table-cell p-4'>{stat.stat?.assists}</td>
-								<td className='table-cell p-4'>{stat.stat?.points}</td>
-								<td className='table-cell p-4'>
-									{stat.stat?.plusMinus || '--'}
-								</td>
-								<td className='table-cell p-4'>
-									{stat.stat?.penaltyMinutes || '--'}
-								</td>
-								<td className='table-cell p-4'>
-									{stat.stat?.powerPlayGoals || '--'}
-								</td>
-								<td className='table-cell p-4'>
-									{stat.stat?.powerPlayPoints || '--'}
-								</td>
-								<td className='table-cell p-4'>
-									{stat.stat?.shortHandedGoals || '--'}
-								</td>
-								<td className='table-cell p-4'>
-									{stat.stat?.shortHandedPoints || '--'}
-								</td>
-								<td className='table-cell p-4'>
-									{stat.stat?.gameWinningGoals || '--'}
-								</td>
-								<td className='table-cell p-4'>
-									{stat.stat?.overTimeGoals || '--'}
-								</td>
-								<td className='table-cell p-4'>{stat.stat?.shots || '--'}</td>
-								<td className='table-cell p-4'>{stat.stat?.shotPct || '--'}</td>
-								<td className='table-cell p-4'>
-									{stat.stat?.faceOffPct || '--'}
-								</td>
+								<td className=' p-4'>{stat.team?.name}</td>
+								<td className=' p-4'>{stat.stat?.games}</td>
+								<td className=' p-4'>{stat.stat?.goals}</td>
+								<td className=' p-4'>{stat.stat?.assists}</td>
+								<td className=' p-4'>{stat.stat?.points}</td>
+								<td className=' p-4'>{stat.stat?.plusMinus || '--'}</td>
+								<td className=' p-4'>{stat.stat?.penaltyMinutes || '--'}</td>
+								<td className=' p-4'>{stat.stat?.powerPlayGoals || '--'}</td>
+								<td className=' p-4'>{stat.stat?.powerPlayPoints || '--'}</td>
+								<td className=' p-4'>{stat.stat?.shortHandedGoals || '--'}</td>
+								<td className=' p-4'>{stat.stat?.shortHandedPoints || '--'}</td>
+								<td className=' p-4'>{stat.stat?.gameWinningGoals || '--'}</td>
+								<td className=' p-4'>{stat.stat?.overTimeGoals || '--'}</td>
+								<td className=' p-4'>{stat.stat?.shots || '--'}</td>
+								<td className=' p-4'>{stat.stat?.shotPct || '--'}</td>
+								<td className=' p-4'>{stat.stat?.faceOffPct || '--'}</td>
 							</tr>
 						);
 					})}
-					<tr>
-						<td className='table-cell p-4 sticky left-0 bg-black'>Career</td>
-						<td className='table-cell p-4'>{}</td>
-						<td className='table-cell p-4'>
-							{careerStats.splits[0].stat?.games}
-						</td>
-						<td className='table-cell p-4'>
-							{careerStats.splits[0].stat?.goals}
-						</td>
-						<td className='table-cell p-4'>
-							{careerStats.splits[0].stat?.assists}
-						</td>
-						<td className='table-cell p-4'>
-							{careerStats.splits[0].stat?.points}
-						</td>
-						<td className='table-cell p-4'>
-							{careerStats.splits[0].stat?.plusMinus || '--'}
-						</td>
-						<td className='table-cell p-4'>
-							{careerStats.splits[0].stat?.penaltyMinutes || '--'}
-						</td>
-						<td className='table-cell p-4'>
-							{careerStats.splits[0].stat?.powerPlayGoals || '--'}
-						</td>
-						<td className='table-cell p-4'>
-							{careerStats.splits[0].stat?.powerPlayPoints || '--'}
-						</td>
-						<td className='table-cell p-4'>
-							{careerStats.splits[0].stat?.shortHandedGoals || '--'}
-						</td>
-						<td className='table-cell p-4'>
-							{careerStats.splits[0].stat?.shortHandedPoints || '--'}
-						</td>
-						<td className='table-cell p-4'>
-							{careerStats.splits[0].stat?.gameWinningGoals || '--'}
-						</td>
-						<td className='table-cell p-4'>
-							{careerStats.splits[0].stat?.overTimeGoals || '--'}
-						</td>
-						<td className='table-cell p-4'>
-							{careerStats.splits[0].stat?.shots || '--'}
-						</td>
-						<td className='table-cell p-4'>
-							{careerStats.splits[0].stat?.shotPct || '--'}
-						</td>
-						<td className='table-cell p-4'>
-							{careerStats.splits[0].stat?.faceOffPct || '--'}
-						</td>
-					</tr>
+					{reducedStats && (
+						<tr>
+							<td className=' p-4 sticky left-0 bg-black'>Career</td>
+							<td className=' p-4'>{}</td>
+							<td className=' p-4'>{reducedStats.stat?.games}</td>
+							<td className=' p-4'>{reducedStats.stat?.goals}</td>
+							<td className=' p-4'>{reducedStats.stat?.assists}</td>
+							<td className=' p-4'>{reducedStats.stat?.points}</td>
+							<td className=' p-4'>{reducedStats.stat?.plusMinus || '--'}</td>
+							<td className=' p-4'>{reducedStats.stat?.pim || '--'}</td>
+							<td className=' p-4'>
+								{reducedStats.stat?.powerPlayGoals || '--'}
+							</td>
+							<td className=' p-4'>
+								{reducedStats.stat?.powerPlayPoints || '--'}
+							</td>
+							<td className=' p-4'>
+								{reducedStats.stat?.shortHandedGoals || '--'}
+							</td>
+							<td className=' p-4'>
+								{reducedStats.stat?.shortHandedPoints || '--'}
+							</td>
+							<td className=' p-4'>
+								{reducedStats.stat?.gameWinningGoals || '--'}
+							</td>
+							<td className=' p-4'>
+								{reducedStats.stat?.overTimeGoals || '--'}
+							</td>
+							<td className=' p-4'>{reducedStats.stat?.shots || '--'}</td>
+							<td className=' p-4'>
+								{(reducedStats.stat?.shotPct &&
+									(reducedStats.stat?.shotPct! / filteredStats.length).toFixed(
+										2
+									)) ||
+									'--'}
+							</td>
+							<td className=' p-4'>
+								{(reducedStats.stat?.faceOffPct &&
+									(
+										reducedStats.stat?.faceOffPct! / filteredStats.length
+									).toFixed(2)) ||
+									'--'}
+							</td>
+						</tr>
+					)}
 				</tbody>
-			</table> */}
+			</table>
 		</div>
 	);
 };
