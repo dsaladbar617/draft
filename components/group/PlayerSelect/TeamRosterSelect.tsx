@@ -4,14 +4,14 @@ import {
 	SelectItem,
 	SelectTrigger,
 	SelectValue
-} from './ui/select';
+} from '../../ui/select';
 
 interface TeamsSelectProps {
 	setter: (value: string) => void;
 	data: TeamTypeWithRoster | undefined;
 }
 
-const TeamsSelect = ({ setter, data }: TeamsSelectProps) => {
+const TeamRosterSelect = ({ setter, data }: TeamsSelectProps) => {
 	return (
 		<Select
 			onValueChange={(e) => {
@@ -33,7 +33,7 @@ const TeamsSelect = ({ setter, data }: TeamsSelectProps) => {
 					})
 					.map((elem) => (
 						<SelectItem
-							className='hover:bg-slate-500'
+							className='hover:bg-slate-500 focus:bg-slate-500'
 							key={elem.name}
 							value={elem.id.toString()}>
 							{elem.name}
@@ -44,4 +44,4 @@ const TeamsSelect = ({ setter, data }: TeamsSelectProps) => {
 	);
 };
 
-export default TeamsSelect;
+export default TeamRosterSelect;

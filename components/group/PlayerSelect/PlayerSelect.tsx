@@ -1,10 +1,12 @@
+'use client';
+import { useState } from 'react';
 import {
 	Select,
 	SelectContent,
 	SelectItem,
 	SelectTrigger,
 	SelectValue
-} from './ui/select';
+} from '../../ui/select';
 import { useRouter } from 'next/navigation';
 
 interface PlayerSelectProps {
@@ -13,19 +15,24 @@ interface PlayerSelectProps {
 }
 
 const PlayerSelect = ({ data, currentTeam }: PlayerSelectProps) => {
+	const [value, setValue] = useState<string>('Pick a Player');
 	const selectedTeam = data?.teams?.filter(
 		(elem) => elem.id.toString() === currentTeam
 	)[0];
 
 	const router = useRouter();
 
+	console.log(value);
+
 	return (
 		<Select
+		// value={value !== '' ? value : 'Pick a Player'}
 			onValueChange={async (e) => {
 				router.push(`/player/${e}`);
+				setValue(e);
 			}}>
 			<SelectTrigger className='w-1/3 lg:w-1/4'>
-				<SelectValue placeholder='Pick a Player' />
+				<SelectValue placeholder={value} />
 			</SelectTrigger>
 			<SelectContent
 				className='max-h-[var(--radix-select-content-available-height)]'
@@ -49,7 +56,7 @@ const PlayerSelect = ({ data, currentTeam }: PlayerSelectProps) => {
 						})
 						.map((elem, index) => (
 							<SelectItem
-								className='hover:bg-slate-500'
+								className='hover:bg-slate-500 focus:bg-slate-500'
 								value={`${elem.person.fullName.replace(
 									' ',
 									'%20'
@@ -59,7 +66,7 @@ const PlayerSelect = ({ data, currentTeam }: PlayerSelectProps) => {
 							</SelectItem>
 						))
 				) : (
-					<SelectItem key={0} className='hover:bg-slate-500' value={'0'}>
+					<SelectItem key={0} className='hover:bg-slate-500 focus:bg-slate-500' value={'0'}>
 						{'No Team Selected'}
 					</SelectItem>
 				)}

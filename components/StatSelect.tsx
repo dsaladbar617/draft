@@ -15,15 +15,29 @@ interface StatSelectProps {
 
 const StatSelect = ({ leagueType, setSeason, setLeague }: StatSelectProps) => {
 	return (
-		<div className='flex flex-row gap-4 justify-center w-2/3 mx-auto mt-4'>
+		<div className='flex flex-row gap-4 justify-center w-2/3 mx-auto pt-4'>
 			<Select
-				// value='National Hockey League'
 				onValueChange={(e) => setLeague(e)}>
 				<SelectTrigger className='w-1/3'>
 					<SelectValue placeholder='NHL' />
 				</SelectTrigger>
 				<SelectContent className='max-h-[75vh]'>
+				<SelectItem
+							className='hover:bg-slate-500'
+							key={uuidv4()}
+							value={'all'}>
+							{'All Types'}
+						</SelectItem>
+
 					{leagueType?.map((elem) => (
+						elem === 'National Hockey League' ?
+						<SelectItem
+							className='hover:bg-slate-500'
+							key={uuidv4()}
+							value={elem!}>
+							{'NHL'}
+						</SelectItem>
+						:
 						<SelectItem
 							className='hover:bg-slate-500'
 							key={uuidv4()}

@@ -3,7 +3,7 @@
 import { Suspense, use, useState } from 'react';
 import DraftTable from '../../../components/DraftTable';
 import useGetDraft from '@/lib/useGetDraft';
-import DraftSelect from '@/components/DraftSelect';
+import DraftSelectGroup from '@/components/group/DraftSelect/DraftSelectGroup';
 
 export default function Home({ params }: { params: { year: string } }) {
 	const getCurrentYear = () => {
@@ -18,7 +18,7 @@ export default function Home({ params }: { params: { year: string } }) {
 
 	return (
 		<div>
-			<DraftSelect currentYear={currentYear} setter={setSelectedTeam} />
+			<DraftSelectGroup currentYear={currentYear} setter={setSelectedTeam} />
 			<Suspense fallback={<div>Loading...</div>}>
 				<DraftTable data={data!} selectedTeam={selectedTeam} />
 			</Suspense>

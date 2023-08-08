@@ -6,13 +6,15 @@ import {
 	SelectValue
 } from './ui/select';
 
-interface PlaceholderSelectProps {}
+interface PlaceholderSelectProps {
+	placeholder: string;
+}
 
-const PlaceholderSelect = ({}) => {
+const PlaceholderSelect = ({placeholder}: PlaceholderSelectProps) => {
 	return (
 		<Select>
 			<SelectTrigger className='w-1/3 lg:w-1/4'>
-				<SelectValue placeholder='Pick a Team' />
+				<SelectValue placeholder={placeholder} />
 			</SelectTrigger>
 			<SelectContent className='max-h-[50vh]' position='popper'>
 				<SelectItem key={0} className='hover:bg-slate-500' value={'0'}>

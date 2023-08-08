@@ -1,17 +1,17 @@
-import getNHLYears from '../lib/getCurrentYear';
+import getNHLYears from '../../../lib/getCurrentYear';
 import {
 	Select,
 	SelectContent,
 	SelectItem,
 	SelectTrigger,
 	SelectValue
-} from './ui/select';
+} from '../../ui/select';
 
 type DraftYearSelectProps = {
 	setter: (value: string) => void;
 };
 
-const DraftYearSelect = ({ setter }: DraftYearSelectProps) => {
+const RosterYearSelect = ({ setter }: DraftYearSelectProps) => {
 	const dates = getNHLYears(false);
 
 	return (
@@ -24,7 +24,7 @@ const DraftYearSelect = ({ setter }: DraftYearSelectProps) => {
 			</SelectTrigger>
 			<SelectContent className='max-h-[50vh]' position='popper'>
 				{dates.map((elem) => (
-					<SelectItem className='hover:bg-slate-500' key={elem} value={elem}>
+					<SelectItem className='hover:bg-slate-500 focus:bg-slate-500' key={elem} value={elem}>
 						{elem}
 					</SelectItem>
 				))}
@@ -33,4 +33,4 @@ const DraftYearSelect = ({ setter }: DraftYearSelectProps) => {
 	);
 };
 
-export default DraftYearSelect;
+export default RosterYearSelect;

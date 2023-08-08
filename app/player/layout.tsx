@@ -1,5 +1,5 @@
 import { Inter } from 'next/font/google';
-import SelectGroup from '@/components/SelectGroup';
+import PlayerSearchSelectGroup from '@/components/group/PlayerSelect/PlayerSearchSelectGroup';
 import Header from '@/components/Header';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -15,8 +15,8 @@ export default function RootLayout({
 	children: React.ReactNode;
 }) {
 	return (
-		<section className={inter.className}>
-			<SelectGroup />
+		<section className={`${inter.className} h-[calc(100vh-56px)] fixed inset-x-0 overflow-auto`}>
+			<PlayerSearchSelectGroup />
 			{children}
 		</section>
 	);

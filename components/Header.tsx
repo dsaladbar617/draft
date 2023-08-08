@@ -5,7 +5,7 @@ interface HeaderProps {}
 
 const Header = () => {
 	return (
-		<nav className='bg-slate-600 h-[6vh]'>
+		<nav className='bg-slate-600 h-[56px] sticky top-0'>
 			<div className='h-full items-center flex justify-end mx-auto w-11/12'>
 				<Link className='p-2' href='/'>
 					HOME
