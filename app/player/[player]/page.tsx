@@ -25,7 +25,7 @@ const Page = async ({ searchParams }: PageProps) => {
 
 
   return (
-    <div className=" max-w-[1264px] h-full mx-auto bg-slate-700 ">
+    <div className=" max-w-[1264px] h-max mx-auto bg-slate-700 pb-3 ">
       <div >
         <Image
           src={await getPlayerActionShot(playerData?.id.toString(), playerData?.currentTeam?.id.toString())}
@@ -74,7 +74,7 @@ const Page = async ({ searchParams }: PageProps) => {
           <CareerStatTable player={player!} />
         </div>
       </div>
-      <div className='bg-slate-900 rounded-md w-[99%] mx-auto my-3'>
+      <div className='bg-slate-900 rounded-md w-[99%] mx-auto mt-3'>
         <DetailedStatsTable player={player!} />
       </div>
     </div>

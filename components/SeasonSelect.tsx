@@ -6,7 +6,6 @@ import {
 	SelectTrigger,
 	SelectValue
 } from './ui/select';
-import { ScrollArea } from './ui/scroll-area';
 
 type Props = {
 	data: any[];
