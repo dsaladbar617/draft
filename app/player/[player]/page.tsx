@@ -28,7 +28,7 @@ const Page = async ({ searchParams }: PageProps) => {
 
 
   return (
-    <div className=" max-w-[1264px] h-max mx-auto bg-slate-700 pb-3 ">
+    <div className=" max-w-[1264px] h-fit mx-auto bg-slate-700 pb-3 ">
       <div >
         <Image
           src={await getPlayerActionShot(playerData?.id.toString(), playerData?.currentTeam?.id.toString())}
