@@ -14,6 +14,7 @@ interface TeamsSelectProps {
 const TeamRosterSelect = ({ setter, data }: TeamsSelectProps) => {
 	return (
 		<Select
+		aria-label='roster team select'
 			onValueChange={(e) => {
 				setter(e);
 			}}>

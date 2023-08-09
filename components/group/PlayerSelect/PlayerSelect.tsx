@@ -22,11 +22,10 @@ const PlayerSelect = ({ data, currentTeam }: PlayerSelectProps) => {
 
 	const router = useRouter();
 
-	console.log(value);
 
 	return (
 		<Select
-		// value={value !== '' ? value : 'Pick a Player'}
+			aria-label='player select'
 			onValueChange={async (e) => {
 				router.push(`/player/${e}`);
 				setValue(e);

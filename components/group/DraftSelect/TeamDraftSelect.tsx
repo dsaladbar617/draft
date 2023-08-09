@@ -27,7 +27,7 @@ const TeamDraftSelect = ({ setter, currentYear }: Props) => {
 
 	return (
 		<Select
-			aria-label=''
+			aria-label='draft team filter'
 			onValueChange={(e) => {
 				if (e) setter(e);
 			}}>

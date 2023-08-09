@@ -1,14 +1,13 @@
 "use client";
 import { useState } from "react";
-import StatSelect from "./StatSelect";
+import StatSelect from "./group/StatSelect/StatSelect";
 import { v4 as uuidv4 } from "uuid";
-// import Stats from '../types/Stats';
 
 interface StatsTableProps {
   player: NHLPlayer;
 }
 
-const DetailedStatsTable = ({ player }: StatsTableProps) => {
+const PlayerDetailedStatsTable = ({ player }: StatsTableProps) => {
   const [seasonType, setSeasonType] = useState("Regular Season");
   const [currentLeauge, setCurrentLeague] = useState("National Hockey League");
 
@@ -67,47 +66,51 @@ const DetailedStatsTable = ({ player }: StatsTableProps) => {
     return elem;
   });
 
-  console.log(currentLeauge, filteredStats);
-
   const reducedStats =
-    filteredStats.length > 0 &&
+    // filteredStats.length > 0 &&
     filteredStats.reduce((acc, curr) => {
-      const gamesPlayed = curr.stat?.games;
-      const goals = curr.stat?.goals;
-      const assists = curr.stat?.assists;
-      const points = curr.stat?.points;
-      const plusMinus = curr.stat?.plusMinus;
-      const pim = curr.stat?.pim;
-      const ppg = curr.stat?.powerPlayGoals;
-      const ppp = curr.stat?.powerPlayPoints;
-      const shg = curr.stat?.shortHandedGoals;
-      const shp = curr.stat?.shortHandedPoints;
-      const gwg = curr.stat?.gameWinningGoals;
-      const otg = curr.stat?.overTimeGoals;
-      const shots = curr.stat?.shots;
-      const shotPct = curr.stat?.shotPct;
-      const faceoffPct = curr.stat?.faceOffPct;
+
+      const player = curr.stat as PlayerSplitStats;
+      const gamesPlayed = player.games;
+      const goals = player.goals;
+      const assists = player.assists;
+      const points = player.points;
+      const plusMinus = player.plusMinus;
+      const pim = player.pim;
+      const ppg = player.powerPlayGoals;
+      const ppp = player.powerPlayPoints;
+      const shg = player.shortHandedGoals;
+      const shp = player.shortHandedPoints;
+      const gwg = player.gameWinningGoals;
+      const otg = player.overTimeGoals;
+      const shots = player.shots;
+      const shotPct = player.shotPct;
+      const faceoffPct = player.faceOffPct;
+
+      const playerAcc = acc.stat as PlayerSplitStats;
 
       return {
         stat: {
-          games: acc.stat!.games + gamesPlayed!,
-          goals: acc.stat!.goals + goals!,
-          assists: acc.stat!.assists + assists!,
-          points: acc.stat!.points + points!,
-          plusMinus: acc.stat!.plusMinus + plusMinus!,
-          pim: acc.stat!.pim + pim!,
-          powerPlayGoals: acc.stat!.powerPlayGoals! + ppg!,
-          powerPlayPoints: acc.stat!.powerPlayPoints! + ppp!,
-          shortHandedGoals: acc.stat!.shortHandedGoals! + shg!,
-          shortHandedPoints: acc.stat!.shortHandedPoints! + shp!,
-          gameWinningGoals: acc.stat!.gameWinningGoals! + gwg!,
-          overTimeGoals: acc.stat!.overTimeGoals! + otg!,
-          shots: acc.stat!.shots! + shots!,
-          shotPct: acc.stat!.shotPct! + shotPct!,
-          faceOffPct: acc.stat!.faceOffPct! + faceoffPct!,
+          games: playerAcc.games + gamesPlayed!,
+          goals: playerAcc.goals + goals!,
+          assists: playerAcc.assists + assists!,
+          points: playerAcc.points + points!,
+          plusMinus: playerAcc.plusMinus! + plusMinus!,
+          pim: playerAcc.pim + pim!,
+          powerPlayGoals: playerAcc.powerPlayGoals! + ppg!,
+          powerPlayPoints: playerAcc.powerPlayPoints! + ppp!,
+          shortHandedGoals: playerAcc.shortHandedGoals! + shg!,
+          shortHandedPoints: playerAcc.shortHandedPoints! + shp!,
+          gameWinningGoals: playerAcc.gameWinningGoals! + gwg!,
+          overTimeGoals: playerAcc.overTimeGoals! + otg!,
+          shots: playerAcc.shots! + shots!,
+          shotPct: playerAcc.shotPct! + shotPct!,
+          faceOffPct: playerAcc.faceOffPct! + faceoffPct!,
         },
       };
     });
+
+    const reducedPlayerStats = reducedStats?.stat as PlayerSplitStats;
 
   const careerStats = playerData?.stats[careerIndex];
 
@@ -147,6 +150,7 @@ const DetailedStatsTable = ({ player }: StatsTableProps) => {
             </thead>
             <tbody className="table-row-group divide-y divide-gray-300">
               {filteredStats.map((stat) => {
+                const player = stat.stat as PlayerSplitStats;
                 return (
                   <tr className="table-row" key={uuidv4()}>
                     <td className=" px-[8px] py-[13px] sticky left-0 bg-black">
@@ -156,44 +160,44 @@ const DetailedStatsTable = ({ player }: StatsTableProps) => {
                       )}-${stat.season?.substring(4)}`}
                     </td>
                     <td className=" px-[8px] py-[13px]">{stat.team?.name}</td>
-                    <td className=" px-[8px] py-[13px]">{stat.stat?.games}</td>
-                    <td className=" px-[8px] py-[13px]">{stat.stat?.goals}</td>
+                    <td className=" px-[8px] py-[13px]">{player.games}</td>
+                    <td className=" px-[8px] py-[13px]">{player.goals}</td>
                     <td className=" px-[8px] py-[13px]">
-                      {stat.stat?.assists}
+                      {player.assists}
                     </td>
-                    <td className=" px-[8px] py-[13px]">{stat.stat?.points}</td>
+                    <td className=" px-[8px] py-[13px]">{player.points}</td>
                     <td className=" px-[8px] py-[13px]">
-                      {stat.stat?.plusMinus || "--"}
-                    </td>
-                    <td className=" px-[8px] py-[13px]">
-                      {stat.stat?.penaltyMinutes || "--"}
+                      {player.plusMinus || "--"}
                     </td>
                     <td className=" px-[8px] py-[13px]">
-                      {stat.stat?.powerPlayGoals || "--"}
+                      {player.penaltyMinutes || "--"}
                     </td>
                     <td className=" px-[8px] py-[13px]">
-                      {stat.stat?.powerPlayPoints || "--"}
+                      {player.powerPlayGoals || "--"}
                     </td>
                     <td className=" px-[8px] py-[13px]">
-                      {stat.stat?.shortHandedGoals || "--"}
+                      {player.powerPlayPoints || "--"}
                     </td>
                     <td className=" px-[8px] py-[13px]">
-                      {stat.stat?.shortHandedPoints || "--"}
+                      {player.shortHandedGoals || "--"}
                     </td>
                     <td className=" px-[8px] py-[13px]">
-                      {stat.stat?.gameWinningGoals || "--"}
+                      {player.shortHandedPoints || "--"}
                     </td>
                     <td className=" px-[8px] py-[13px]">
-                      {stat.stat?.overTimeGoals || "--"}
+                      {player.gameWinningGoals || "--"}
                     </td>
                     <td className=" px-[8px] py-[13px]">
-                      {stat.stat?.shots || "--"}
+                      {player.overTimeGoals || "--"}
                     </td>
                     <td className=" px-[8px] py-[13px]">
-                      {stat.stat?.shotPct || "--"}
+                      {player.shots || "--"}
                     </td>
                     <td className=" px-[8px] py-[13px]">
-                      {stat.stat?.faceOffPct || "--"}
+                      {player.shotPct || "--"}
+                    </td>
+                    <td className=" px-[8px] py-[13px]">
+                      {player.faceOffPct || "--"}
                     </td>
                   </tr>
                 );
@@ -205,55 +209,55 @@ const DetailedStatsTable = ({ player }: StatsTableProps) => {
                   </td>
                   <td className=" px-[8px] py-[13px]">{"-"}</td>
                   <td className=" px-[8px] py-[13px]">
-                    {reducedStats.stat?.games}
+                    {reducedPlayerStats.games}
                   </td>
                   <td className=" px-[8px] py-[13px]">
-                    {reducedStats.stat?.goals}
+                    {reducedPlayerStats.goals}
                   </td>
                   <td className=" px-[8px] py-[13px]">
-                    {reducedStats.stat?.assists}
+                    {reducedPlayerStats.assists}
                   </td>
                   <td className=" px-[8px] py-[13px]">
-                    {reducedStats.stat?.points}
+                    {reducedPlayerStats.points}
                   </td>
                   <td className=" px-[8px] py-[13px]">
-                    {reducedStats.stat?.plusMinus || "--"}
+                    {reducedPlayerStats.plusMinus || "--"}
                   </td>
                   <td className=" px-[8px] py-[13px]">
-                    {reducedStats.stat?.pim || "--"}
+                    {reducedPlayerStats.pim || "--"}
                   </td>
                   <td className=" px-[8px] py-[13px]">
-                    {reducedStats.stat?.powerPlayGoals || "--"}
+                    {reducedPlayerStats.powerPlayGoals || "--"}
                   </td>
                   <td className=" px-[8px] py-[13px]">
-                    {reducedStats.stat?.powerPlayPoints || "--"}
+                    {reducedPlayerStats.powerPlayPoints || "--"}
                   </td>
                   <td className=" px-[8px] py-[13px]">
-                    {reducedStats.stat?.shortHandedGoals || "--"}
+                    {reducedPlayerStats.shortHandedGoals || "--"}
                   </td>
                   <td className=" px-[8px] py-[13px]">
-                    {reducedStats.stat?.shortHandedPoints || "--"}
+                    {reducedPlayerStats.shortHandedPoints || "--"}
                   </td>
                   <td className=" px-[8px] py-[13px]">
-                    {reducedStats.stat?.gameWinningGoals || "--"}
+                    {reducedPlayerStats.gameWinningGoals || "--"}
                   </td>
                   <td className=" px-[8px] py-[13px]">
-                    {reducedStats.stat?.overTimeGoals || "--"}
+                    {reducedPlayerStats.overTimeGoals || "--"}
                   </td>
                   <td className=" px-[8px] py-[13px]">
-                    {reducedStats.stat?.shots || "--"}
+                    {reducedPlayerStats.shots || "--"}
                   </td>
                   <td className=" px-[8px] py-[13px]">
-                    {(reducedStats.stat?.shotPct &&
+                    {(reducedPlayerStats.shotPct &&
                       (
-                        reducedStats.stat?.shotPct! / filteredStats.length
+                        reducedPlayerStats.shotPct! / filteredStats.length
                       ).toFixed(2)) ||
                       "--"}
                   </td>
                   <td className=" px-[8px] py-[13px]">
-                    {(reducedStats.stat?.faceOffPct &&
+                    {(reducedPlayerStats.faceOffPct &&
                       (
-                        reducedStats.stat?.faceOffPct! / filteredStats.length
+                        reducedPlayerStats.faceOffPct! / filteredStats.length
                       ).toFixed(2)) ||
                       "--"}
                   </td>
@@ -269,4 +273,4 @@ const DetailedStatsTable = ({ player }: StatsTableProps) => {
   );
 };
 
-export default DetailedStatsTable;
+export default PlayerDetailedStatsTable;

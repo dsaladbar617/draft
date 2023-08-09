@@ -1,10 +1,12 @@
 import Image from "next/image";
-import CareerStatTable from "@/components/CareerStatTable";
+import PlayerCareerStatTable from "@/components/PlayerCareerStatTable";
 import getProspect from "@/lib/getProspect";
 import getPlayerWithStats from "@/lib/getPlayerWithStats";
-import DetailedStatsTable from "@/components/DetailedStatsTable";
+import PlayerDetailedStatsTable from "@/components/PlayerDetailedStatsTable";
 import getPlayerHeadshot from "@/lib/getPlayerHeadshot";
 import getPlayerActionShot from "@/lib/getPlayerActionShot";
+import GoalieCareerStatTable from "@/components/GoalieCareerStatTable";
+import GoalieDetailedStatsTable from "@/components/GoalieDetailedStatsTable";
 
 type PageProps = {
   searchParams: { id: string };
@@ -22,6 +24,7 @@ const Page = async ({ searchParams }: PageProps) => {
     return <div className="text-center mt-10">Player not found</div>;
   const player = await getPlayerWithStats(fetchedPlayer);
   const playerData = player?.people?.[0];
+  const playerPosition = playerData?.primaryPosition?.abbreviation;
 
 
   return (
@@ -43,13 +46,13 @@ const Page = async ({ searchParams }: PageProps) => {
           className="mx-auto h-[80px] w-[80px] md:h-[160px] md:w-[160px] -mt-12 md:-mt-24 rounded-full"
           priority
         />
-        <h1 className='text-center text-3xl mt-3'>{playerData.fullName} | {`#${playerData.primaryNumber}`}</h1>
-        <h2 className='text-center text-xl mt-3 flex flex-row justify-center'>{`${playerData.primaryPosition.abbreviation} | ${playerData.height} | ${playerData.weight} lb ${ playerData.currentAge !== undefined ? `| Age: ${playerData?.currentAge} | ` : ''}` }
+        <h1 className='text-center text-3xl mt-3'>{playerData.fullName}{ playerData.primaryNumber ? ` | # ${playerData.primaryNumber}` : ''}</h1>
+        <h2 className='hidden text-center text-xl mt-3 sm:flex flex-row justify-center'>{`${playerData.primaryPosition.abbreviation} | ${playerData.height} | ${playerData.weight} lb ${ playerData.currentAge !== undefined ? `| Age: ${playerData?.currentAge} | ` : ''}` }
         {
         playerData.currentTeam?.id ?
-        <div className="flex flex-row">
+        <span className="flex flex-row flex-nowrap">
           <Image src={`https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/${playerData.currentTeam.id}.svg`} alt="team logo" height={35} width={35} />&nbsp;{playerData.currentTeam.name}
-          </div>
+          </span>
            : null
         }</h2>
       </div>
@@ -69,13 +72,14 @@ const Page = async ({ searchParams }: PageProps) => {
                   : ''
               } ${playerData?.birthCountry}`}
             </h2>
-            <h2>Shoots: {playerData?.shootsCatches}</h2>
+            <h2>{playerPosition !== 'G' ? 'Shoots' : 'Catches' }: {playerData?.shootsCatches}</h2>
           </div>
-          <CareerStatTable player={player!} />
+          { playerPosition !== 'G' ?
+            <PlayerCareerStatTable player={player!} /> : <GoalieCareerStatTable player={player!} />}
         </div>
       </div>
       <div className='bg-slate-900 rounded-md w-[99%] mx-auto mt-3'>
-        <DetailedStatsTable player={player!} />
+        {playerPosition !== 'G' ? <PlayerDetailedStatsTable player={player!} /> : <GoalieDetailedStatsTable player={player!} />}
       </div>
     </div>
   );

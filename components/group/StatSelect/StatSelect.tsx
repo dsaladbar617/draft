@@ -4,7 +4,7 @@ import {
 	SelectItem,
 	SelectTrigger,
 	SelectValue
-} from './ui/select';
+} from '../../ui/select';
 import { v4 as uuidv4 } from 'uuid';
 
 interface StatSelectProps {
@@ -17,7 +17,8 @@ const StatSelect = ({ leagueType, setSeason, setLeague }: StatSelectProps) => {
 	return (
 		<div className='flex flex-row gap-4 justify-center w-2/3 mx-auto pt-4'>
 			<Select
-				onValueChange={(e) => setLeague(e)}>
+				onValueChange={(e) => setLeague(e)}
+				aria-label='league select'>
 				<SelectTrigger className='w-1/3'>
 					<SelectValue placeholder='NHL' />
 				</SelectTrigger>

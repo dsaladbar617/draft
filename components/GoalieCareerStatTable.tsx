@@ -1,31 +1,30 @@
-interface CareerStatTableProps {
-	player: NHLPlayer;
+interface GoalieCareerStatTableProps {
+  player: NHLPlayer;
 }
 
-const CareerStatTable = ({ player }: CareerStatTableProps) => {
-	const headers = [
-		'Season',
-		'GP',
-		'G',
-		'A',
-		'P',
-		'+/-',
-		'PIM',
-		'PPG',
-		'PPP',
-		'SHG',
-		'SHP',
-		'GWG',
-		'OTG',
-		'S',
-		'S%'
-	];
+const GoalieCareerStatTable = ({player}: GoalieCareerStatTableProps) => {
 
-	const playerData = player?.people?.[0];
+  const headers = [
+    'Season',
+    'GP',
+    'GS',
+    'W',
+    'L',
+    'T',
+    'OT',
+    'SA',
+    'GA',
+    'GAA',
+    'SV%',
+    'SO',
+    'MIN'
+  ]
+
+  const playerData = player?.people?.[0];
 
 	const careerStats = playerData?.stats?.slice(2);
 
-	return (
+  return (
 		<div className=' overflow-x-auto mx-auto w-11/12 lg:w-2/3 rounded-md'>
 			<table className='table w-full table-responsive rounded-md text-center p-4 border-collapse overflow-x-auto text-sm '>
 				<thead className='table-header-group bg-slate-500 rounded-lg p-4'>
@@ -61,6 +60,7 @@ const CareerStatTable = ({ player }: CareerStatTableProps) => {
 						}
 
 						console.log(stat);
+						const goalie = stat.splits?.[0]?.stat as GoalieSplitStats;
 						if (stat.splits.length) {
 							return (
 								<tr className='table-row ' key={stat.type.displayName}>
@@ -68,46 +68,40 @@ const CareerStatTable = ({ player }: CareerStatTableProps) => {
 										{statTitle}
 									</td>
 									<td className='table-cell px-[8px] py-[13px]'>
-										{stat.splits?.[0]?.stat?.games}
+										{goalie.games}
 									</td>
 									<td className='table-cell px-[8px] py-[13px]'>
-										{stat.splits?.[0]?.stat?.goals}
+										{goalie.gamesStarted}
 									</td>
 									<td className='table-cell px-[8px] py-[13px]'>
-										{stat.splits?.[0]?.stat?.assists}
+										{goalie.wins}
 									</td>
 									<td className='table-cell px-[8px] py-[13px]'>
-										{stat.splits?.[0]?.stat?.points}
+										{goalie.losses}
 									</td>
 									<td className='table-cell px-[8px] py-[13px]'>
-										{stat.splits?.[0]?.stat?.plusMinus}
+										{goalie.ties || '--' }
 									</td>
 									<td className='table-cell px-[8px] py-[13px]'>
-										{stat.splits?.[0]?.stat?.penaltyMinutes}
+										{goalie.ot}
 									</td>
 									<td className='table-cell px-[8px] py-[13px]'>
-										{stat.splits?.[0]?.stat?.powerPlayGoals}
+										{goalie.shotsAgainst}
 									</td>
 									<td className='table-cell px-[8px] py-[13px]'>
-										{stat.splits?.[0]?.stat?.powerPlayPoints}
+										{goalie.goalsAgainst}
 									</td>
 									<td className='table-cell px-[8px] py-[13px]'>
-										{stat.splits?.[0]?.stat?.shortHandedGoals}
+										{(goalie.goalAgainstAverage!).toFixed(2)}
 									</td>
 									<td className='table-cell px-[8px] py-[13px]'>
-										{stat.splits?.[0]?.stat?.shortHandedPoints}
+										{(goalie.savePercentage!).toFixed(2)}
 									</td>
 									<td className='table-cell px-[8px] py-[13px]'>
-										{stat.splits?.[0]?.stat?.gameWinningGoals}
+										{goalie.shutouts}
 									</td>
 									<td className='table-cell px-[8px] py-[13px]'>
-										{stat.splits?.[0]?.stat?.overTimeGoals}
-									</td>
-									<td className='table-cell px-[8px] py-[13px]'>
-										{stat.splits?.[0]?.stat?.shots}
-									</td>
-									<td className='table-cell px-[8px] py-[13px]'>
-										{stat.splits?.[0]?.stat?.shotPct}
+										{goalie.timeOnIce}
 									</td>
 								</tr>
 							);
@@ -117,6 +111,6 @@ const CareerStatTable = ({ player }: CareerStatTableProps) => {
 			</table>
 		</div>
 	);
-};
+}
 
-export default CareerStatTable;
+export default GoalieCareerStatTable

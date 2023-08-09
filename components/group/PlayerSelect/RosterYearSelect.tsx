@@ -16,6 +16,7 @@ const RosterYearSelect = ({ setter }: DraftYearSelectProps) => {
 
 	return (
 		<Select
+		aria-label='roster year select'
 			onValueChange={async (e) => {
 				setter(e.replace('-', ''));
 			}}>
