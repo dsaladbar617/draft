@@ -60,7 +60,7 @@ const PlayerCareerStatTable = ({ player }: CareerStatTableProps) => {
 								season.substring(0, index) + '-' + season.substring(index);
 						}
 
-						console.log(stat);
+						const player = stat.splits?.[0]?.stat as PlayerSplitStats;
 						if (stat.splits.length) {
 							return (
 								<tr className='table-row ' key={stat.type.displayName}>
@@ -68,46 +68,46 @@ const PlayerCareerStatTable = ({ player }: CareerStatTableProps) => {
 										{statTitle}
 									</td>
 									<td className='table-cell px-[8px] py-[13px]'>
-										{stat.splits?.[0]?.stat?.games}
+										{player.games}
 									</td>
 									<td className='table-cell px-[8px] py-[13px]'>
-										{stat.splits?.[0]?.stat?.goals}
+										{player.goals}
 									</td>
 									<td className='table-cell px-[8px] py-[13px]'>
-										{stat.splits?.[0]?.stat?.assists}
+										{player.assists}
 									</td>
 									<td className='table-cell px-[8px] py-[13px]'>
-										{stat.splits?.[0]?.stat?.points}
+										{player.points}
 									</td>
 									<td className='table-cell px-[8px] py-[13px]'>
-										{stat.splits?.[0]?.stat?.plusMinus}
+										{player.plusMinus}
 									</td>
 									<td className='table-cell px-[8px] py-[13px]'>
-										{stat.splits?.[0]?.stat?.penaltyMinutes}
+										{player.penaltyMinutes}
 									</td>
 									<td className='table-cell px-[8px] py-[13px]'>
-										{stat.splits?.[0]?.stat?.powerPlayGoals}
+										{player.powerPlayGoals}
 									</td>
 									<td className='table-cell px-[8px] py-[13px]'>
-										{stat.splits?.[0]?.stat?.powerPlayPoints}
+										{player.powerPlayPoints}
 									</td>
 									<td className='table-cell px-[8px] py-[13px]'>
-										{stat.splits?.[0]?.stat?.shortHandedGoals}
+										{player.shortHandedGoals}
 									</td>
 									<td className='table-cell px-[8px] py-[13px]'>
-										{stat.splits?.[0]?.stat?.shortHandedPoints}
+										{player.shortHandedPoints}
 									</td>
 									<td className='table-cell px-[8px] py-[13px]'>
-										{stat.splits?.[0]?.stat?.gameWinningGoals}
+										{player.gameWinningGoals}
 									</td>
 									<td className='table-cell px-[8px] py-[13px]'>
-										{stat.splits?.[0]?.stat?.overTimeGoals}
+										{player.overTimeGoals}
 									</td>
 									<td className='table-cell px-[8px] py-[13px]'>
-										{stat.splits?.[0]?.stat?.shots}
+										{player.shots}
 									</td>
 									<td className='table-cell px-[8px] py-[13px]'>
-										{stat.splits?.[0]?.stat?.shotPct}
+										{player.shotPct}
 									</td>
 								</tr>
 							);
