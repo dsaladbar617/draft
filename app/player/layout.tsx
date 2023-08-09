@@ -15,7 +15,7 @@ export default function RootLayout({
 	children: React.ReactNode;
 }) {
 	return (
-		<section className={`${inter.className} h-[calc(100vh-56px)] fixed inset-x-0 overflow-auto`}>
+		<section className={`${inter.className} h-[calc(100dvh-56px)] fixed inset-x-0 overflow-auto`}>
 			<PlayerSearchSelectGroup />
 			{children}
 		</section>
