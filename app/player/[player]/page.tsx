@@ -7,6 +7,9 @@ import getPlayerHeadshot from "@/lib/getPlayerHeadshot";
 import getPlayerActionShot from "@/lib/getPlayerActionShot";
 import GoalieCareerStatTable from "@/components/GoalieCareerStatTable";
 import GoalieDetailedStatsTable from "@/components/GoalieDetailedStatsTable";
+import MobileGoalieStatsSummary from "@/components/MobileGoalieStatsSummary";
+import PlayerCard from "@/components/PlayerCard";
+import MobilePlayerStatsSummary from "@/components/MobilePlayerStatsSummary";
 
 type PageProps = {
   searchParams: { id: string };
@@ -26,12 +29,14 @@ const Page = async ({ searchParams }: PageProps) => {
   const playerData = player?.people?.[0];
   const playerPosition = playerData?.primaryPosition?.abbreviation;
 
-
   return (
     <div className=" max-w-[1264px] h-fit mx-auto bg-slate-700 pb-3 ">
-      <div >
+      <div>
         <Image
-          src={await getPlayerActionShot(playerData?.id.toString(), playerData?.currentTeam?.id.toString())}
+          src={await getPlayerActionShot(
+            playerData?.id.toString(),
+            playerData?.currentTeam?.id.toString()
+          )}
           alt="player action shot"
           width={1264}
           height={390}
@@ -46,40 +51,56 @@ const Page = async ({ searchParams }: PageProps) => {
           className="mx-auto h-[80px] w-[80px] md:h-[160px] md:w-[160px] -mt-12 md:-mt-24 rounded-full"
           priority
         />
-        <h1 className='text-center text-3xl mt-3'>{playerData.fullName}{ playerData.primaryNumber ? ` | # ${playerData.primaryNumber}` : ''}</h1>
-        <h2 className='hidden text-center text-xl mt-3 sm:flex flex-row justify-center'>{`${playerData.primaryPosition.abbreviation} | ${playerData.height} | ${playerData.weight} lb ${ playerData.currentAge !== undefined ? `| Age: ${playerData?.currentAge} | ` : ''}` }
-        {
-        playerData.currentTeam?.id ?
-        <span className="flex flex-row flex-nowrap">
-          <Image src={`https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/${playerData.currentTeam.id}.svg`} alt="team logo" height={35} width={35} />&nbsp;{playerData.currentTeam.name}
-          </span>
-           : null
-        }</h2>
+        <h1 className="text-center text-3xl mt-3">
+          {playerData.fullName}
+          {playerData.primaryNumber ? ` | # ${playerData.primaryNumber}` : ""}
+        </h1>
+        <h2 className="hidden text-center text-xl mt-3 sm:flex flex-row justify-center">
+          {`${playerData.primaryPosition.abbreviation} | ${
+            playerData.height
+          } | ${playerData.weight} lb ${
+            playerData.currentAge !== undefined
+              ? `| Age: ${playerData?.currentAge} | `
+              : ""
+          }`}
+          {playerData.currentTeam?.id ? (
+            <span className="flex flex-row flex-nowrap">
+              <Image
+                src={`https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/${playerData.currentTeam.id}.svg`}
+                alt="team logo"
+                height={35}
+                width={35}
+              />
+              &nbsp;{playerData.currentTeam.name}
+            </span>
+          ) : null}
+        </h2>
       </div>
-      <div className="bg-slate-900 rounded-md w-[99%] mx-auto mt-5 ">
-        <h1 className="text-2xl text-center w-full pt-3">Stats</h1>
-        <div className="p-5 pt-0 rounded-md mx-auto flex flex-wrap justify-center">
-          <div className='p-3 pt-0 text-xl block'>
-            <h2>Name: {playerData?.fullName}</h2>
-            <h2>Height: {playerData?.height}</h2>
-            <h2>Weight: {playerData?.weight}</h2>
-            <h2>Born: {playerData?.birthDate}</h2>
-            <h2>
-              Birthplace:
-              {` ${playerData?.birthCity}, ${
-                playerData?.birthStateProvince !== undefined
-                  ? `${playerData?.birthStateProvince},`
-                  : ''
-              } ${playerData?.birthCountry}`}
-            </h2>
-            <h2>{playerPosition !== 'G' ? 'Shoots' : 'Catches' }: {playerData?.shootsCatches}</h2>
-          </div>
-          { playerPosition !== 'G' ?
-            <PlayerCareerStatTable player={player!} /> : <GoalieCareerStatTable player={player!} />}
-        </div>
+      <div className="bg-slate-900 rounded-md w-[99%] h-fit flex flex-col md:flex-row mx-auto mt-5 p-5
+      justify-between">
+        {playerPosition === "G" ? (
+          <MobileGoalieStatsSummary player={player!} />
+        ) : (
+          <MobilePlayerStatsSummary player={player!} />
+        )}
+        <hr className="h-px my-2 w-11/12 mx-auto md:hidden bg-gray-200 border-0 dark:bg-gray-700"></hr>
+        <PlayerCard player={player!} />
+        {/* <div className="hidden md:block w-full overflow-x-auto"> */}
+          {/* <div className="py-5 px-3 md:w-2/3 rounded-md mx-auto"> */}
+            {playerPosition !== "G" ? (
+              <PlayerCareerStatTable player={player!} />
+            ) : (
+              <GoalieCareerStatTable player={player!} />
+            )}
+          {/* </div> */}
+        {/* </div> */}
       </div>
-      <div className='bg-slate-900 rounded-md w-[99%] mx-auto mt-3'>
-        {playerPosition !== 'G' ? <PlayerDetailedStatsTable player={player!} /> : <GoalieDetailedStatsTable player={player!} />}
+      <div className="bg-slate-900 rounded-md w-[99%] mx-auto mt-3 p-5">
+        {playerPosition !== "G" ? (
+          <PlayerDetailedStatsTable player={player!} />
+        ) : (
+          <GoalieDetailedStatsTable player={player!} />
+        )}
       </div>
     </div>
   );

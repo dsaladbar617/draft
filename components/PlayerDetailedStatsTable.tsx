@@ -2,6 +2,7 @@
 import { useState } from "react";
 import StatSelect from "./group/StatSelect/StatSelect";
 import { v4 as uuidv4 } from "uuid";
+import getReducedPlayerStats from "@/lib/getReducedPlayerStats";
 
 interface StatsTableProps {
   player: NHLPlayer;
@@ -32,27 +33,13 @@ const PlayerDetailedStatsTable = ({ player }: StatsTableProps) => {
   ];
 
   let index = -1;
-  switch (seasonType) {
-    case "Regular Season":
-      index = 0;
-      break;
-    case "Playoffs":
-      index = 1;
-      break;
-    default:
-      break;
-  }
-
   let careerIndex = -1;
-  switch (seasonType) {
-    case "Regular Season":
-      careerIndex = 2;
-      break;
-    case "Playoffs":
-      careerIndex = 3;
-      break;
-    default:
-      break;
+  if (seasonType === 'Regular Season') {
+    index = 0;
+    careerIndex = 2;
+  } else if (seasonType === 'Playoffs') {
+    index = 1;
+    careerIndex = 3;
   }
 
   const playerData = player?.people?.[0];
@@ -66,53 +53,7 @@ const PlayerDetailedStatsTable = ({ player }: StatsTableProps) => {
     return elem;
   });
 
-  const reducedStats =
-    // filteredStats.length > 0 &&
-    filteredStats.reduce((acc, curr) => {
-
-      const player = curr.stat as PlayerSplitStats;
-      const gamesPlayed = player.games;
-      const goals = player.goals;
-      const assists = player.assists;
-      const points = player.points;
-      const plusMinus = player.plusMinus;
-      const pim = player.pim;
-      const ppg = player.powerPlayGoals;
-      const ppp = player.powerPlayPoints;
-      const shg = player.shortHandedGoals;
-      const shp = player.shortHandedPoints;
-      const gwg = player.gameWinningGoals;
-      const otg = player.overTimeGoals;
-      const shots = player.shots;
-      const shotPct = player.shotPct;
-      const faceoffPct = player.faceOffPct;
-
-      const playerAcc = acc.stat as PlayerSplitStats;
-
-      return {
-        stat: {
-          games: playerAcc.games + gamesPlayed!,
-          goals: playerAcc.goals + goals!,
-          assists: playerAcc.assists + assists!,
-          points: playerAcc.points + points!,
-          plusMinus: playerAcc.plusMinus! + plusMinus!,
-          pim: playerAcc.pim + pim!,
-          powerPlayGoals: playerAcc.powerPlayGoals! + ppg!,
-          powerPlayPoints: playerAcc.powerPlayPoints! + ppp!,
-          shortHandedGoals: playerAcc.shortHandedGoals! + shg!,
-          shortHandedPoints: playerAcc.shortHandedPoints! + shp!,
-          gameWinningGoals: playerAcc.gameWinningGoals! + gwg!,
-          overTimeGoals: playerAcc.overTimeGoals! + otg!,
-          shots: playerAcc.shots! + shots!,
-          shotPct: playerAcc.shotPct! + shotPct!,
-          faceOffPct: playerAcc.faceOffPct! + faceoffPct!,
-        },
-      };
-    });
-
-    const reducedPlayerStats = reducedStats?.stat as PlayerSplitStats;
-
-  const careerStats = playerData?.stats[careerIndex];
+  const reducedPlayerStats = getReducedPlayerStats(filteredStats);
 
   const leagues = playerData?.stats[0].splits.map((elem) => {
     return elem.league?.name;
@@ -127,9 +68,9 @@ const PlayerDetailedStatsTable = ({ player }: StatsTableProps) => {
         setLeague={setCurrentLeague}
       />
       <h1 className="text-2xl mt-3 pl-2">{`${playerData.fullName} Career Stats`}</h1>
-      <div className="overflow-x-auto rounded-md w-full mx-auto">
+      <div className="overflow-x-auto rounded-md w-full mx-auto mt-2">
         {filteredStats.length > 0 ? (
-          <table className="table text-sm  w-[99%] mx-auto mt-2 rounded-md text-center p-4 border-collapse overflow-x-auto ">
+          <table className="table table-responsive text-sm  w-full mx-auto  rounded-md text-center p-4 border-collapse overflow-x-auto ">
             <thead className="table-header-group bg-slate-500 rounded-lg px-[8px] py-[13px]">
               <tr className="table-row rounded">
                 {headers.map((header: string, index: number) => (
@@ -152,7 +93,7 @@ const PlayerDetailedStatsTable = ({ player }: StatsTableProps) => {
               {filteredStats.map((stat) => {
                 const player = stat.stat as PlayerSplitStats;
                 return (
-                  <tr className="table-row" key={uuidv4()}>
+                  <tr className="table-row bg-slate-800" key={uuidv4()}>
                     <td className=" px-[8px] py-[13px] sticky left-0 bg-black">
                       {`${stat.season?.substring(
                         0,
@@ -202,8 +143,8 @@ const PlayerDetailedStatsTable = ({ player }: StatsTableProps) => {
                   </tr>
                 );
               })}
-              {reducedStats && currentLeauge !== "all" && (
-                <tr>
+              {reducedPlayerStats && currentLeauge !== "all" && (
+                <tr className='bg-slate-800'>
                   <td className=" px-[8px] py-[13px] sticky left-0 bg-black">
                     Career
                   </td>
@@ -266,7 +207,7 @@ const PlayerDetailedStatsTable = ({ player }: StatsTableProps) => {
             </tbody>
           </table>
         ) : (
-          <div>{`${playerData.fullName} does not have any ${currentLeauge} stats`}</div>
+          <div className='p-2'>{`${playerData.fullName} does not have any ${currentLeauge} stats`}</div>
         )}
       </div>
     </>

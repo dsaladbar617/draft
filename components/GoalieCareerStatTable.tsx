@@ -25,18 +25,18 @@ const GoalieCareerStatTable = ({player}: GoalieCareerStatTableProps) => {
 	const careerStats = playerData?.stats?.slice(2);
 
   return (
-		<div className=' overflow-x-auto mx-auto w-11/12 lg:w-2/3 rounded-md'>
-			<table className='table w-full table-responsive rounded-md text-center p-4 border-collapse overflow-x-auto text-sm '>
-				<thead className='table-header-group bg-slate-500 rounded-lg p-4'>
-					<tr className='table-row rounded'>
+		<div className='hidden md:block overflow-x-auto m-auto w-full rounded-md '>
+			<table className='table w-full table-responsive rounded-md text-center border-collapse text-sm '>
+				<thead className='table-header-group bg-slate-500 rounded-md p-4'>
+					<tr className='table-row rounded-md'>
 						{headers.map((header: string, index: number) => (
 							<th
 								key={header}
 								className={`table-cell px-[8px] py-[13px] ${
-									index === headers.length - 1 ? 'rounded-tr-lg' : null
+									index === headers.length - 1 ? 'rounded-tr-md' : null
 								} ${
 									index === 0
-										? 'rounded-tl-lg sticky left-0 bg-slate-500'
+										? 'rounded-tl-md sticky left-0 bg-slate-500'
 										: null
 								}`}>
 								{header}
@@ -63,8 +63,8 @@ const GoalieCareerStatTable = ({player}: GoalieCareerStatTableProps) => {
 						const goalie = stat.splits?.[0]?.stat as GoalieSplitStats;
 						if (stat.splits.length) {
 							return (
-								<tr className='table-row ' key={stat.type.displayName}>
-									<td className='table-cell text-left text-small break-keep w-fit px-[8px] py-[13px] sticky left-0 bg-black'>
+								<tr className='table-row bg-slate-800' key={stat.type.displayName}>
+									<td className='table-cell text-left text-small break-keep px-[8px] py-[13px] sticky left-0 bg-black'>
 										{statTitle}
 									</td>
 									<td className='table-cell px-[8px] py-[13px]'>
@@ -95,7 +95,7 @@ const GoalieCareerStatTable = ({player}: GoalieCareerStatTableProps) => {
 										{(goalie.goalAgainstAverage!).toFixed(2)}
 									</td>
 									<td className='table-cell px-[8px] py-[13px]'>
-										{(goalie.savePercentage!).toFixed(2)}
+										{(goalie.savePercentage!).toFixed(3)}
 									</td>
 									<td className='table-cell px-[8px] py-[13px]'>
 										{goalie.shutouts}

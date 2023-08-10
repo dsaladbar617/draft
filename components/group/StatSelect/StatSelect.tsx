@@ -15,7 +15,7 @@ interface StatSelectProps {
 
 const StatSelect = ({ leagueType, setSeason, setLeague }: StatSelectProps) => {
 	return (
-		<div className='flex flex-row gap-4 justify-center w-2/3 mx-auto pt-4'>
+		<div className='flex flex-row gap-4 justify-center w-2/3 mx-auto '>
 			<Select
 				onValueChange={(e) => setLeague(e)}
 				aria-label='league select'>
@@ -29,15 +29,16 @@ const StatSelect = ({ leagueType, setSeason, setLeague }: StatSelectProps) => {
 							value={'all'}>
 							{'All Types'}
 						</SelectItem>
-
-					{leagueType?.map((elem) => (
-						elem === 'National Hockey League' ?
 						<SelectItem
 							className='hover:bg-slate-500'
 							key={uuidv4()}
-							value={elem!}>
+							value={'National Hockey League'}>
 							{'NHL'}
 						</SelectItem>
+
+					{leagueType?.map((elem) => (
+						elem === 'National Hockey League' ?
+						null
 						:
 						<SelectItem
 							className='hover:bg-slate-500'

@@ -26,8 +26,8 @@ const PlayerCareerStatTable = ({ player }: CareerStatTableProps) => {
 	const careerStats = playerData?.stats?.slice(2);
 
 	return (
-		<div className=' overflow-x-auto mx-auto w-11/12 lg:w-2/3 rounded-md'>
-			<table className='table w-full table-responsive rounded-md text-center p-4 border-collapse overflow-x-auto text-sm '>
+		<div className=' overflow-x-auto mx-auto rounded-md hidden md:block'>
+			<table className='table w-full rounded-md text-center border-collapse text-sm '>
 				<thead className='table-header-group bg-slate-500 rounded-lg p-4'>
 					<tr className='table-row rounded'>
 						{headers.map((header: string, index: number) => (
@@ -115,7 +115,7 @@ const PlayerCareerStatTable = ({ player }: CareerStatTableProps) => {
 					})}
 				</tbody>
 			</table>
-		</div>
+		 </div>
 	);
 };
 
