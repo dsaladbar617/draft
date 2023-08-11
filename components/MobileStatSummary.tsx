@@ -27,14 +27,14 @@ const MobileStatSummary = ({ player }: MobileStatSummaryProps) => {
           `${seasonName.substring(0, index)}-${seasonName.substring(index)}`;
         }
 
-        return (
+        if (season.splits[0]?.stat?.games) return (
           <div key={uuidv4()} className="p-4 md:hidden">
             <h2>{statTitle}</h2>
             <table className="text-sm w-full text-center mx-auto">
               <thead>
                 <tr>
                   {headers.map((header) => {
-                    const stat = season.splits[0].stat;
+                    const stat = season.splits[0]?.stat;
                     if (stat)
                       return (
                         <th
@@ -50,7 +50,7 @@ const MobileStatSummary = ({ player }: MobileStatSummaryProps) => {
               <tbody>
                 <tr>
                 {headers.map((header: header) => {
-                    const stat = season.splits[0].stat;
+                    const stat = season.splits[0]?.stat;
                     if (stat)
                       return (
                         <td
