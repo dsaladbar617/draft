@@ -47,10 +47,9 @@ const CareerStatTable = ({player}: TestCareerTableProps) => {
 							const season = `${stat.splits[0]?.season}`;
 							const index = 4;
 							statTitle =
-								season.substring(0, index) + '-' + season.substring(index);
+								`${season.substring(0, index)}-${season.substring(index)}`;
 						}
 
-						console.log(stat);
             const seasonStat = playerPosition === 'G' ? stat.splits?.[0]?.stat as GoalieSplitStats : stat.splits?.[0]?.stat as PlayerSplitStats;
 						if (stat.splits.length) {
 							return (

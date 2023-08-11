@@ -13,7 +13,7 @@ const MobileStatSummary = ({ player }: MobileStatSummaryProps) => {
 
   return (
     <div className=" p-4 md:hidden">
-      {career.map((season, index) => {
+      {career.map((season) => {
         let statTitle = "";
 
         if (season.type.displayName === "careerRegularSeason") {
@@ -24,7 +24,7 @@ const MobileStatSummary = ({ player }: MobileStatSummaryProps) => {
           const seasonName = `${season.splits[0]?.season}`;
           const index = 4;
           statTitle =
-            seasonName.substring(0, index) + "-" + seasonName.substring(index) + " Season";
+          `${seasonName.substring(0, index)}-${seasonName.substring(index)}`;
         }
 
         return (
@@ -33,7 +33,7 @@ const MobileStatSummary = ({ player }: MobileStatSummaryProps) => {
             <table className="text-sm w-full text-center mx-auto">
               <thead>
                 <tr>
-                  {headers.map((header: header, index: number) => {
+                  {headers.map((header) => {
                     const stat = season.splits[0].stat;
                     if (stat)
                       return (
@@ -49,7 +49,7 @@ const MobileStatSummary = ({ player }: MobileStatSummaryProps) => {
               </thead>
               <tbody>
                 <tr>
-                {headers.map((header: header, index: number) => {
+                {headers.map((header: header) => {
                     const stat = season.splits[0].stat;
                     if (stat)
                       return (
