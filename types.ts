@@ -71,44 +71,44 @@ type Prospect = {
 
 type NHLPlayer = {
   copyright: string;
-  people: [
-    {
-      id: number;
-      fullName: string;
-      link: string;
-      firstName: string;
-      lastName: string;
-      primaryNumber: string;
-      birthDate: string;
-      currentAge: number;
-      birthCity: string;
-      birthCountry: string;
-      birthStateProvince?: string;
-      nationality: string;
-      height: string;
-      weight: number;
-      active: true;
-      alternateCaptain: false;
-      captain: true;
-      rookie: false;
-      shootsCatches: string;
-      rosterStatus: string;
-      currentTeam: {
-        id: number;
-        name: string;
-        link: string;
-      };
-      primaryPosition: {
-        code: string;
-        name: string;
-        type: string;
-        abbreviation: string;
-      };
-
-      stats: Stats[];
-    }
-  ];
+  people: NHLPlayerPeople[];
 };
+
+type NHLPlayerPeople = {
+  id: number;
+  fullName: string;
+  link: string;
+  firstName: string;
+  lastName: string;
+  primaryNumber: string;
+  birthDate: string;
+  currentAge: number;
+  birthCity: string;
+  birthCountry: string;
+  birthStateProvince?: string;
+  nationality: string;
+  height: string;
+  weight: number;
+  active: true;
+  alternateCaptain: false;
+  captain: true;
+  rookie: false;
+  shootsCatches: string;
+  rosterStatus: string;
+  currentTeam: {
+    id: number;
+    name: string;
+    link: string;
+  };
+  primaryPosition: {
+    code: string;
+    name: string;
+    type: string;
+    abbreviation: string;
+  };
+
+  stats: Stats[];
+}
 
 type Stats = {
   type: {
@@ -238,6 +238,7 @@ type FetchedProspect = {
   prospects: Prospect[];
 };
 
-type SuggestionType = {
-  suggestions: string[];
+type header = {
+  label: string;
+  dataProp: string;
 };

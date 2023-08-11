@@ -1,6 +1,5 @@
 import { Inter } from 'next/font/google';
 import PlayerSearchSelectGroup from '@/components/group/PlayerSelect/PlayerSearchSelectGroup';
-import Header from '@/components/Header';
 
 const inter = Inter({ subsets: ['latin'] });
 

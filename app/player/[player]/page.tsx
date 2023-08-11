@@ -1,15 +1,12 @@
 import Image from "next/image";
-import PlayerCareerStatTable from "@/components/PlayerCareerStatTable";
 import getProspect from "@/lib/getProspect";
 import getPlayerWithStats from "@/lib/getPlayerWithStats";
-import PlayerDetailedStatsTable from "@/components/PlayerDetailedStatsTable";
 import getPlayerHeadshot from "@/lib/getPlayerHeadshot";
 import getPlayerActionShot from "@/lib/getPlayerActionShot";
-import GoalieCareerStatTable from "@/components/GoalieCareerStatTable";
-import GoalieDetailedStatsTable from "@/components/GoalieDetailedStatsTable";
-import MobileGoalieStatsSummary from "@/components/MobileGoalieStatsSummary";
 import PlayerCard from "@/components/PlayerCard";
-import MobilePlayerStatsSummary from "@/components/MobilePlayerStatsSummary";
+import DetailedStatTable from "@/components/DetailedStatTable";
+import CareerStatTable from "../../../components/CareerStatTable";
+import MobileStatSummary from "@/components/MobileStatSummary";
 
 type PageProps = {
   searchParams: { id: string };
@@ -27,7 +24,6 @@ const Page = async ({ searchParams }: PageProps) => {
     return <div className="text-center mt-10">Player not found</div>;
   const player = await getPlayerWithStats(fetchedPlayer);
   const playerData = player?.people?.[0];
-  const playerPosition = playerData?.primaryPosition?.abbreviation;
 
   return (
     <div className=" max-w-[1264px] h-fit mx-auto bg-slate-700 pb-3 ">
@@ -76,31 +72,18 @@ const Page = async ({ searchParams }: PageProps) => {
           ) : null}
         </h2>
       </div>
-      <div className="bg-slate-900 rounded-md w-[99%] h-fit flex flex-col md:flex-row mx-auto mt-5 p-5
-      justify-between">
-        {playerPosition === "G" ? (
-          <MobileGoalieStatsSummary player={player!} />
-        ) : (
-          <MobilePlayerStatsSummary player={player!} />
-        )}
+      <div
+        className="bg-slate-900 rounded-md w-[99%] h-fit flex flex-col md:flex-row mx-auto mt-5 p-5
+      justify-between"
+      >
+        <MobileStatSummary player={player!} />
         <hr className="h-px my-2 w-11/12 mx-auto md:hidden bg-gray-200 border-0 dark:bg-gray-700"></hr>
         <PlayerCard player={player!} />
-        {/* <div className="hidden md:block w-full overflow-x-auto"> */}
-          {/* <div className="py-5 px-3 md:w-2/3 rounded-md mx-auto"> */}
-            {playerPosition !== "G" ? (
-              <PlayerCareerStatTable player={player!} />
-            ) : (
-              <GoalieCareerStatTable player={player!} />
-            )}
-          {/* </div> */}
-        {/* </div> */}
+
+        <CareerStatTable player={player!} />
       </div>
       <div className="bg-slate-900 rounded-md w-[99%] mx-auto mt-3 p-5">
-        {playerPosition !== "G" ? (
-          <PlayerDetailedStatsTable player={player!} />
-        ) : (
-          <GoalieDetailedStatsTable player={player!} />
-        )}
+        <DetailedStatTable player={player!} />
       </div>
     </div>
   );
