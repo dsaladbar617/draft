@@ -74,7 +74,7 @@ const Page = async ({ searchParams }: PageProps) => {
       </div>
       <div
         className="bg-slate-900 rounded-md w-[99%] h-fit flex flex-col md:flex-row mx-auto mt-5 p-5
-      justify-between"
+      justify-evenly"
       >
         <MobileStatSummary player={player!} />
         <hr className="h-px my-2 w-11/12 mx-auto md:hidden bg-gray-200 border-0 dark:bg-gray-700"></hr>

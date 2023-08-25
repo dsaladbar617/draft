@@ -14,8 +14,8 @@ const CareerStatTable = ({player}: TestCareerTableProps) => {
   const careerStats = playerData?.stats?.slice(2);
 
   return (
-		<div className='hidden md:block overflow-x-auto m-auto w-full rounded-md '>
-			<table className='table w-full table-responsive rounded-md text-center border-collapse text-sm whitespace-nowrap'>
+		<div className='hidden md:block overflow-x-auto m-auto w-full rounded-md max-w-[900px]'>
+			<table className='table w-full table-responsive rounded-md text-center border-collapse text-sm whitespace-nowrap '>
 				<thead className='table-header-group bg-slate-500 rounded-md p-4'>
 					<tr className='table-row rounded-md'>
 						{headers.map((header: header, index: number) => {
