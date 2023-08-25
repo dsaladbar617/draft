@@ -1,6 +1,6 @@
 'use client';
 
-import { Suspense, use, useState } from 'react';
+import { Suspense, useState } from 'react';
 import DraftTable from '../../../components/DraftTable';
 import useGetDraft from '@/lib/useGetDraft';
 import DraftSelectGroup from '@/components/group/DraftSelect/DraftSelectGroup';
