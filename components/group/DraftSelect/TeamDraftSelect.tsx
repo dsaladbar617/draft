@@ -32,10 +32,10 @@ const TeamDraftSelect = ({ setter, currentYear }: Props) => {
 				if (e) setter(e);
 			}}>
 			<SelectTrigger className='w-1/3'>
-				<SelectValue placeholder='Select a team...' />
+				<SelectValue placeholder='Team' />
 			</SelectTrigger>
 			<SelectContent className='max-h-[75vh]'>
-				<SelectItem className='hover:bg-slate-500 focus:bg-slate-500' key={0} value={'0'}>
+				<SelectItem className='hover:bg-neutral-500 focus:bg-neutral-500' key={0} value={'0'}>
 					{'None'}
 				</SelectItem>
 				<SelectSeparator className="h-[1px] bg-white m-[5px]" />
@@ -51,7 +51,7 @@ const TeamDraftSelect = ({ setter, currentYear }: Props) => {
 					})
 					.map((elem) => (
 						<SelectItem
-							className='hover:bg-slate-500 focus:bg-slate-500'
+							className='hover:bg-neutral-500 focus:bg-neutral-500'
 							key={elem.id}
 							value={elem.id.toString()}>
 							{elem.name}

@@ -27,8 +27,8 @@ const DraftTable = ({ data, selectedTeam }: TableProps) => {
 
   return (
     <table className='table mx-auto mt-10 table-responsive rounded-md text-center p-4 w-2/3 border-collapse'>
-			<thead className='table-header-group bg-slate-500 rounded-lg p-4'>
-				<tr className='table-row rounded'>
+			<thead className='table-header-group bg-neutral-950 rounded-lg p-4'>
+				<tr className=' hidden md:table-row rounded'>
 					{headers.map((header: string, index: number) => (
 						<th
 							key={header}
@@ -41,18 +41,18 @@ const DraftTable = ({ data, selectedTeam }: TableProps) => {
 				</tr>
 			</thead>
 			<tbody className='table-row-group divide-y divide-gray-300'>
-				{draft?.map((round) => (
+				{draft?.map((round, index) => (
 					<Fragment key={uuidv4()}>
-						<tr className='table-row'>
-							<td colSpan={3} className='table-cell text-center font-bold text-xl p-4'>
+						<tr className='table-row '>
+							<td data-cell='round' colSpan={3} className={`table-cell ${index === 0 &&'rounded-t-lg'} text-center  md:rounded-none font-bold text-xl p-[14.25px] bg-neutral-900`}>
 								Round {round.round}
 							</td>
 						</tr>
 						{round.picks.map((pick) => (
-									<tr key={uuidv4()} className='hover:bg-slate-400 hover:text-black hover:cursor-pointer' onClick={() => router.push(`/player/${pick.prospect.fullName}?id=${pick.prospect.id?.toString()}`)}>
-										<td className='table-cell p-4'>{pick.pickOverall}</td>
-										<td className='table-cell p-4'>{pick.team.name}</td>
-										<td className='table-cell p-4'>{pick.prospect.fullName}</td>
+									<tr key={uuidv4()} className='hover:bg-neutral-400  bg-neutral-700 odd:bg-primary hover:text-black hover:cursor-pointer grid  md:table-row' onClick={() => router.push(`/player/${pick.prospect.fullName}?id=${pick.prospect.id?.toString()}`)}>
+										<td data-cell='pick' className='grid-cols-[15ch_auto] pt-2 md:p-4 before:content-["Pick:_"] md:before:content-none'>{pick.pickOverall}</td>
+										<td data-cell='team' className='grid-cols-[15ch_auto] pt-2 md:p-4 before:content-["Team:_"] md:before:content-none'>{pick.team.name}</td>
+										<td data-cell='name' className='grid-cols-[15ch_auto] pt-2 pb-2 md:p-4 before:content-["Name:_"] md:before:content-none'>{pick.prospect.fullName}</td>
 									</tr>
 						))}
 					</Fragment>

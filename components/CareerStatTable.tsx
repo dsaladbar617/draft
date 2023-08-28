@@ -16,7 +16,7 @@ const CareerStatTable = ({player}: TestCareerTableProps) => {
   return (
 		<div className='hidden md:block overflow-x-auto m-auto w-full rounded-md max-w-[900px]'>
 			<table className='table w-full table-responsive rounded-md text-center border-collapse text-sm whitespace-nowrap '>
-				<thead className='table-header-group bg-slate-500 rounded-md p-4'>
+				<thead className='table-header-group bg-neutral-500 rounded-md p-4'>
 					<tr className='table-row rounded-md'>
 						{headers.map((header: header, index: number) => {
               if (header.label === 'Team') return null
@@ -27,7 +27,7 @@ const CareerStatTable = ({player}: TestCareerTableProps) => {
 									index === headers.length - 1 ? 'rounded-tr-md' : null
 								} ${
 									index === 0
-										? 'rounded-tl-md sticky left-0 bg-slate-500'
+										? 'rounded-tl-md sticky left-0 bg-neutral-500'
 										: null
 								}`}>
 								{header.label}
