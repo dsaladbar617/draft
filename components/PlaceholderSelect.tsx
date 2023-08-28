@@ -17,7 +17,7 @@ const PlaceholderSelect = ({placeholder}: PlaceholderSelectProps) => {
 				<SelectValue placeholder={placeholder} />
 			</SelectTrigger>
 			<SelectContent className='max-h-[50vh]' position='popper'>
-				<SelectItem key={0} className='hover:bg-slate-500' value={'0'}>
+				<SelectItem key={0} className='hover:bg-neutral-500' value={'0'}>
 					{'No Team Selected'}
 				</SelectItem>
 			</SelectContent>

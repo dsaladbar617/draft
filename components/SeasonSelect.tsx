@@ -28,7 +28,7 @@ const SeasonSelect = ({ data, teams, setter }: Props) => {
 				{/* <ScrollArea className=' h-64'> */}
 				{options.map((elem) => (
 					<SelectItem
-						className='hover:bg-slate-500'
+						className='hover:bg-neutral-500'
 						key={elem.value}
 						value={elem.value}>
 						{elem.label}

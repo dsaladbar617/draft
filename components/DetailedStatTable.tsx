@@ -32,7 +32,7 @@ const DetailedStatTable = ({ player }: TestDetailedTableProps) => {
       <div className="overflow-x-auto mt-2 rounded-md w-[99%] mx-auto">
         {filteredStats.length > 0 ? (
           <table className="table table-responsive text-sm w-full mx-auto rounded-md text-center border-collapse overflow-x-auto whitespace-nowrap">
-            <thead className="table-header-group bg-slate-500 rounded-md p-4">
+            <thead className="table-header-group bg-neutral-500 rounded-md p-4">
               <tr className="table-row rounded">
                 {headers.map(
                   (
@@ -45,7 +45,7 @@ const DetailedStatTable = ({ player }: TestDetailedTableProps) => {
                         index === headers.length - 1 ? "rounded-tr-md" : null
                       } ${
                         index === 0
-                          ? "rounded-tl-md sticky left-0 bg-slate-500"
+                          ? "rounded-tl-md sticky left-0 bg-neutral-500"
                           : null
                       }`}
                     >
@@ -59,7 +59,7 @@ const DetailedStatTable = ({ player }: TestDetailedTableProps) => {
               {filteredStats.map((stat) => {
                 const seasonStat = playerPosition === 'G' ? stat.stat as GoalieSplitStats : stat.stat as PlayerSplitStats;
                 return (
-                  <tr className="table-row bg-slate-800" key={uuidv4()}>
+                  <tr className="table-row bg-neutral-800" key={uuidv4()}>
                     {headers.map((header: header, index: number) => {
                       if (index === 0) {
                         return (
@@ -91,7 +91,7 @@ const DetailedStatTable = ({ player }: TestDetailedTableProps) => {
                 );
               })}
               {currentLeauge === "National Hockey League" && (
-                <tr className="bg-slate-800">
+                <tr className="bg-neutral-800">
                   {headers.map((header: header, index: number) => {
                     if (index === 0) {
                       return (

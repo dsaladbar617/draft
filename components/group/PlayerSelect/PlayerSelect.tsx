@@ -55,7 +55,7 @@ const PlayerSelect = ({ data, currentTeam }: PlayerSelectProps) => {
 						})
 						.map((elem, index) => (
 							<SelectItem
-								className='hover:bg-slate-500 focus:bg-slate-500'
+								className='hover:bg-neutral-500 focus:bg-neutral-500'
 								value={`${elem.person.fullName.replace(
 									' ',
 									'%20'
@@ -65,7 +65,7 @@ const PlayerSelect = ({ data, currentTeam }: PlayerSelectProps) => {
 							</SelectItem>
 						))
 				) : (
-					<SelectItem key={0} className='hover:bg-slate-500 focus:bg-slate-500' value={'0'}>
+					<SelectItem key={0} className='hover:bg-neutral-500 focus:bg-neutral-500' value={'0'}>
 						{'No Team Selected'}
 					</SelectItem>
 				)}

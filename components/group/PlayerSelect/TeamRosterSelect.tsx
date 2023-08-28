@@ -34,7 +34,7 @@ const TeamRosterSelect = ({ setter, data }: TeamsSelectProps) => {
 					})
 					.map((elem) => (
 						<SelectItem
-							className='hover:bg-slate-500 focus:bg-slate-500'
+							className='hover:bg-neutral-500 focus:bg-neutral-500'
 							key={elem.name}
 							value={elem.id.toString()}>
 							{elem.name}

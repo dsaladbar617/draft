@@ -38,14 +38,15 @@ const SelectContent = React.forwardRef<
 >(({ className, children, position = "popper", ...props }, ref) => (
   <SelectPrimitive.Portal>
     <SelectPrimitive.Content
-      ref={ref}
+      ref={(ref) => ref?.addEventListener('touchend', (e) => e.preventDefault())}
       className={cn(
         "relative z-50 min-w-[8rem] overflow-hidden rounded-md border bg-popover text-popover-foreground shadow-md animate-in fade-in-80",
-        position === "popper" && "translate-y-1",
+        position === "popper" && "tranneutral-y-1",
         'bg-black',
         className
       )}
       position={position}
+
       {...props}
     >
       <SelectPrimitive.Viewport
@@ -103,7 +104,7 @@ const SelectSeparator = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <SelectPrimitive.Separator
     ref={ref}
-    className={cn("-mx-1 my-1 h-px bg-slate-900", className)}
+    className={cn("-mx-1 my-1 h-px bg-neutral-900", className)}
     {...props}
   />
 ));

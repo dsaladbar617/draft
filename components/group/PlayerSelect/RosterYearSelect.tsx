@@ -25,7 +25,7 @@ const RosterYearSelect = ({ setter }: DraftYearSelectProps) => {
 			</SelectTrigger>
 			<SelectContent className='max-h-[50vh]' position='popper'>
 				{dates.map((elem) => (
-					<SelectItem className='hover:bg-slate-500 focus:bg-slate-500' key={elem} value={elem}>
+					<SelectItem className='hover:bg-neutral-500 focus:bg-neutral-500' key={elem} value={elem}>
 						{elem}
 					</SelectItem>
 				))}

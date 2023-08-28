@@ -24,13 +24,13 @@ const StatSelect = ({ leagueType, setSeason, setLeague }: StatSelectProps) => {
 				</SelectTrigger>
 				<SelectContent className='max-h-[75vh]'>
 				<SelectItem
-							className='hover:bg-slate-500'
+							className='hover:bg-neutral-500'
 							key={uuidv4()}
 							value={'all'}>
 							{'All Types'}
 						</SelectItem>
 						<SelectItem
-							className='hover:bg-slate-500'
+							className='hover:bg-neutral-500'
 							key={uuidv4()}
 							value={'National Hockey League'}>
 							{'NHL'}
@@ -41,7 +41,7 @@ const StatSelect = ({ leagueType, setSeason, setLeague }: StatSelectProps) => {
 						null
 						:
 						<SelectItem
-							className='hover:bg-slate-500'
+							className='hover:bg-neutral-500'
 							key={uuidv4()}
 							value={elem!}>
 							{elem}
@@ -55,13 +55,13 @@ const StatSelect = ({ leagueType, setSeason, setLeague }: StatSelectProps) => {
 				</SelectTrigger>
 				<SelectContent className='max-h-[75vh]'>
 					<SelectItem
-						className='hover:bg-slate-500'
+						className='hover:bg-neutral-500'
 						key={uuidv4()}
 						value={'Regular Season'}>
 						{'Regular Season'}
 					</SelectItem>
 					<SelectItem
-						className='hover:bg-slate-500'
+						className='hover:bg-neutral-500'
 						key={uuidv4()}
 						value={'Playoffs'}>
 						{'Playoffs'}

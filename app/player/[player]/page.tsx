@@ -26,7 +26,7 @@ const Page = async ({ searchParams }: PageProps) => {
   const playerData = player?.people?.[0];
 
   return (
-    <div className=" max-w-[1264px] h-fit mx-auto bg-slate-700 pb-3 ">
+    <div className=" max-w-[1264px] h-fit mx-auto bg-neutral-700 pb-3 ">
       <div>
         <Image
           src={await getPlayerActionShot(
@@ -73,7 +73,7 @@ const Page = async ({ searchParams }: PageProps) => {
         </h2>
       </div>
       <div
-        className="bg-slate-900 rounded-md w-[99%] h-fit flex flex-col md:flex-row mx-auto mt-5 p-5
+        className="bg-neutral-900 rounded-md w-[99%] h-fit flex flex-col md:flex-row mx-auto mt-5 p-5
       justify-evenly"
       >
         <MobileStatSummary player={player!} />
@@ -82,7 +82,7 @@ const Page = async ({ searchParams }: PageProps) => {
 
         <CareerStatTable player={player!} />
       </div>
-      <div className="bg-slate-900 rounded-md w-[99%] mx-auto mt-3 p-5">
+      <div className="bg-neutral-900 rounded-md w-[99%] mx-auto mt-3 p-5">
         <DetailedStatTable player={player!} />
       </div>
     </div>
