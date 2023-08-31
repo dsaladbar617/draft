@@ -26,7 +26,7 @@ const DraftTable = ({ data, selectedTeam }: TableProps) => {
   if (selectedTeam === "0") draft = data?.drafts[0].rounds;
 
   return (
-    <table className='table mx-auto mt-10 table-responsive rounded-md text-center p-4 w-2/3 border-collapse'>
+    <table className='table mx-auto mt-10 table-responsive rounded-md text-center p-4 w-[calc(100vw-3rem)] max-w-[900px] border-collapse'>
 			<thead className='table-header-group bg-neutral-950 rounded-lg p-4'>
 				<tr className=' hidden md:table-row rounded'>
 					{headers.map((header: string, index: number) => (
