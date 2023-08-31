@@ -11,7 +11,6 @@ import { useRouter } from 'next/navigation';
 
 type Props = {
 	currentYear: number;
-	// setCurrentYear: (value: string) => void;
 };
 
 const DraftYearSelect = ({ currentYear }: Props) => {
