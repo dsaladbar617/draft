@@ -15,7 +15,7 @@ const Header = () => {
 				<Link className='p-2 hover:underline' href='/player'>
 					PLAYER
 				</Link>
-				<Link className='p-2 hover:underline' href='/standings/2022/wildcard/'>
+				<Link className='p-2 hover:underline' href='/standings/2023/wildcard/'>
 					STANDINGS
 				</Link>
 			</nav>

@@ -63,7 +63,7 @@ const Page = async ({ searchParams }: PageProps) => {
           {playerData.currentTeam?.id ? (
             <span className="flex flex-row flex-nowrap">
               <Image
-                src={`https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/${playerData.currentTeam.id}.svg`}
+                src={`https://assets.nhle.com/logos/nhl/svg/${playerData.currentTeam.abbreviation}_light.svg`}
                 alt="team logo"
                 height={35}
                 width={35}

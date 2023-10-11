@@ -99,6 +99,18 @@ type NHLPlayerPeople = {
     id: number;
     name: string;
     link: string;
+    venue: Venue;
+    abbreviation: string;
+    teamName: string;
+    locationName: string;
+    firstYearOfPlay: string;
+    division: Division;
+    conference: Conference;
+    franchise: Franchise;
+    shortName: string;
+    officialSiteUrl: string;
+    franchiseId: number;
+    active: boolean;
   };
   primaryPosition: {
     code: string;
@@ -108,7 +120,7 @@ type NHLPlayerPeople = {
   };
 
   stats: Stats[];
-}
+};
 
 type Stats = {
   type: {

@@ -59,7 +59,7 @@ const StandingsTeamTable = ({team, conference}: StandingsTeamTableProps) => {
         <td className='py-[13px] px-[8px]'>{`${awayRecord.wins}-${awayRecord.losses}- ${awayRecord.ot}`}</td>
         <td className='py-[13px] px-[8px]'>{`${shootoutRecord.wins}-${shootoutRecord.losses}`}</td>
         <td className='py-[13px] px-[8px]'>{`${lastTen.wins}-${lastTen.losses}- ${lastTen.ot}`}</td>
-        <td className='py-[13px] px-[8px]'>{team.streak.streakCode}</td>
+        <td className='py-[13px] px-[8px]'>{team.streak?.streakCode}</td>
       </tr>
     )})}
   </tbody>
