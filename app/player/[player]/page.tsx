@@ -7,6 +7,7 @@ import PlayerCard from "@/components/PlayerCard";
 import DetailedStatTable from "@/components/DetailedStatTable";
 import CareerStatTable from "../../../components/CareerStatTable";
 import MobileStatSummary from "@/components/MobileStatSummary";
+import VsTeamStatTable from "@/components/VsStatTableContainer";
 
 type PageProps = {
   searchParams: { id: string };
@@ -84,6 +85,9 @@ const Page = async ({ searchParams }: PageProps) => {
       </div>
       <div className="bg-neutral-900 rounded-md w-[99%] mx-auto mt-3 p-5">
         <DetailedStatTable player={player!} />
+      </div>
+      <div className="bg-neutral-900 rounded-md w-[99%] mx-auto mt-3 p-5">
+        <VsTeamStatTable player={player!} />
       </div>
     </div>
   );

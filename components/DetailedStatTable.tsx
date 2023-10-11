@@ -15,11 +15,15 @@ const DetailedStatTable = ({ player }: TestDetailedTableProps) => {
 
   const playerPosition = player?.people?.[0].primaryPosition?.abbreviation;
 
-  const headers = processTableHeaders(playerPosition)
+  const headers = processTableHeaders(playerPosition);
 
   const playerData = player?.people?.[0];
 
-  const { filteredStats, uniqueLeagues, careerStats } = processDetailedStats(playerData, currentLeauge, seasonType)
+  const { filteredStats, uniqueLeagues, careerStats } = processDetailedStats(
+    playerData,
+    currentLeauge,
+    seasonType
+  );
 
   return (
     <div>
@@ -28,7 +32,7 @@ const DetailedStatTable = ({ player }: TestDetailedTableProps) => {
         setSeason={setSeasonType}
         setLeague={setCurrentLeague}
       />
-      <h1 className="text-2xl mt-3 pl-2">{`${playerData.fullName} Career Stats`}</h1>
+      <h2 className="text-2xl mt-3 pl-2">{`${playerData.fullName} Career Stats`}</h2>
       <div className="overflow-x-auto mt-2 rounded-md w-[99%] mx-auto">
         {filteredStats.length > 0 ? (
           <table className="table table-responsive text-sm w-full mx-auto rounded-md text-center border-collapse overflow-x-auto whitespace-nowrap">
@@ -57,7 +61,10 @@ const DetailedStatTable = ({ player }: TestDetailedTableProps) => {
             </thead>
             <tbody className="table-row-group divide-y divide-gray-300">
               {filteredStats.map((stat) => {
-                const seasonStat = playerPosition === 'G' ? stat.stat as GoalieSplitStats : stat.stat as PlayerSplitStats;
+                const seasonStat =
+                  playerPosition === "G"
+                    ? (stat.stat as GoalieSplitStats)
+                    : (stat.stat as PlayerSplitStats);
                 return (
                   <tr className="table-row bg-neutral-800" key={uuidv4()}>
                     {headers.map((header: header, index: number) => {
@@ -82,8 +89,13 @@ const DetailedStatTable = ({ player }: TestDetailedTableProps) => {
                       }
 
                       return (
-                        <td key={uuidv4()} className="  px-[8px] py-[13px] whitespace-nowrap">
-                          {seasonStat[header.dataProp as keyof typeof seasonStat] || '--'}
+                        <td
+                          key={uuidv4()}
+                          className="  px-[8px] py-[13px] whitespace-nowrap"
+                        >
+                          {seasonStat[
+                            header.dataProp as keyof typeof seasonStat
+                          ] || "--"}
                         </td>
                       );
                     })}
